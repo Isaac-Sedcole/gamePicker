@@ -45,6 +45,7 @@ function Home  (props)  {
 
       <br></br>
       <br></br>
+      
       <button onClick={displayProfile}>Show Profile</button>
       {profileVisible && (<p>{showProfile.response.players[0].steamid}</p>)}
     
