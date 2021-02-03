@@ -3,7 +3,8 @@ import {Route} from 'react-router-dom'
 import Nav from './Nav'
 import Home from './Home'
 
-const App = () => {
+function App ()  {
+  
   return (
     <>
     <h1>React development has begun!</h1>
