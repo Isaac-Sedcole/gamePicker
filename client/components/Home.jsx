@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Form from './Form'
-import {GetPlayerSummaries} from '../apis/steam'
+import {GetPlayerSummaries, GetSteamIdByUsername} from '../apis/steam'
 
 
 function Home  (props)  {
@@ -10,7 +10,9 @@ function Home  (props)  {
 
   const fetchSummary = () => {
     GetPlayerSummaries()
+    // GetSteamIdByUsername()
       .then(fetchedPlayerSummary => {
+        console.log(fetchedPlayerSummary)
         setShowProfile(fetchedPlayerSummary)
       })
   }

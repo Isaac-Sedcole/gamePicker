@@ -35,17 +35,14 @@ const Form = () => {
        <form onSubmit={handleSubmit}>
       {/* {message && <span className="message">{message}</span>} */}
       <h2>User 1:</h2>
-      <label>
-        Name:
+      <label> 
+        Name: <br></br>
         <input type="text" name="name" placeholder="Isaac" onChange={handleChange} />
       </label>
 
+      <br></br>
       <label>
-        Username:
-        <input type="text" name="userName" placeholder="DrSaac" onChange={handleChange} />
-      </label>
-      <label>
-        Profile Link:
+        Profile Link: <br></br>
         <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} required/>
       </label>
 

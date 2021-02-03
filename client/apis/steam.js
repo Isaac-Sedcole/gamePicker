@@ -12,3 +12,9 @@ export function GetOwnedGames() {
   return request.get('/api/steam/games')
     .then(res => res.body)
 }
+
+export function GetSteamIdByUsername() {
+  //gives total games owned, games id and total playtime in minutes
+  return request.get('/api/steam/id')
+    .then(res => res.body)
+}

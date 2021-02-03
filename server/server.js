@@ -21,4 +21,11 @@ server.get('/api/steam/games', (req, res) => {
     })
 })
 
+server.get('/api/steam/id', (req, res) => {
+  steam.GetSteamIdByUsername()
+    .then(body => {
+      res.json(body)
+    })
+})
+
 module.exports = server

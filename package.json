@@ -16,6 +16,7 @@
     "server": "node server",
     "test": "jest",
     "test:watch": "jest --watchAll",
+    "knex": "knex --knexfile server/db/knexfile.js",
     "lint": "eslint ."
   },
   "babel": {
@@ -30,8 +31,10 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "knex": "^0.21.17",
     "react-router-dom": "^5.2.0",
-    "superagent": "^6.1.0"
+    "superagent": "^6.1.0",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
