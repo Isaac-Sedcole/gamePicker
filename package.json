@@ -7,7 +7,6 @@
   "author": "EDA",
   "license": "ISC",
   "scripts": {
-<<<<<<< HEAD
     "client": "webpack serve --config ./client/webpack.config.js --hot",
     "dev": "run-p dev:client dev:server",
     "dev:client": "npm run webpack -- --watch",
@@ -18,25 +17,12 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "webpack": "webpack --config ./client/webpack.config.js",
+    "knex": "knex --knexfile server/db/knexfile.js",
     "lint": "eslint --ext .js,.jsx ."
   },
   "keywords": [
     "fullstack"
   ],
-=======
-    "client": "webpack-dev-server --hot --inline",
-    "dev": "run-p dev:client dev:server",
-    "dev:client": "webpack --watch",
-    "dev:server": "nodemon server",
-    "start": "node server",
-    "build": "webpack",
-    "server": "node server",
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "knex": "knex --knexfile server/db/knexfile.js",
-    "lint": "eslint ."
-  },
->>>>>>> boilerplate-react-webpack/Isaac
   "babel": {
     "presets": [
       "@babel/preset-env",
@@ -47,7 +33,6 @@
       "@babel/plugin-proposal-object-rest-spread"
     ]
   },
-<<<<<<< HEAD
   "eslintConfig": {
     "extends": "eda",
     "ignorePatterns": [
@@ -55,15 +40,12 @@
     ]
   },
   "dependencies": {
-    "express": "^4.17.1"
-=======
-  "dependencies": {
+    "bcrypt": "^5.0.0",
     "express": "^4.17.1",
     "knex": "^0.21.17",
     "react-router-dom": "^5.2.0",
-    "superagent": "^6.1.0",
-    "sqlite3": "^5.0.0"
->>>>>>> boilerplate-react-webpack/Isaac
+    "sqlite3": "^5.0.0",
+    "superagent": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

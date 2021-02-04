@@ -40,4 +40,4 @@ module.exports = {
   }
 }
 
-//to install SQLITE do: 
+//to install SQLITE do: sudo apt install python-is-python3 for linux (on campus)
