@@ -20,7 +20,8 @@ const Games = (props) => {
     GetSteamIdByUsername()
       .then(fetchedId => {
         setIds(currentId => {
-          console.log("these are the ids ",ids)
+          console.log(fetchedId)
+          // console.log("these are the ids ",ids)
           return [
             ...currentId,
             {id: fetchedId}
@@ -33,12 +34,7 @@ const Games = (props) => {
     setShowGames(!showGames)
     GetSteamIdByUsername()
     .then(fetchedId => {
-      setIds(currentId => {
-        return [
-          ...currentId,
-          {id: fetchedId}
-        ]
-      })
+      setIds(fetchedId)
     })
   }
 
