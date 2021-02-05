@@ -28,4 +28,8 @@ server.get('/api/steam/id', (req, res) => {
     })
 })
 
+server.post('/api/steam', (req, res) => {
+  
+})
+
 module.exports = server

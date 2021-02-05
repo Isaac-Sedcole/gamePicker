@@ -12,7 +12,8 @@ const Form = () => {
 
   const [form, setForm] = useState([
     {
-      name:""
+      name:"",
+      profileLink:""
     }
   ])
 
@@ -35,6 +36,7 @@ const Form = () => {
       ]
     })
   }
+  console.log(form)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -49,6 +51,7 @@ const Form = () => {
       <form onSubmit={handleSubmit}>
         {form.map(item => (
         <>
+        {/* {key=item.id} */}
         <h2>User 1:</h2>
           <label>
             Name: <br></br>
@@ -58,7 +61,7 @@ const Form = () => {
           <br></br>
           <label>
             Profile Link: <br></br>
-            <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} required />
+            <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} value={item.profileLink} required />
           </label>
 
           <br></br>
