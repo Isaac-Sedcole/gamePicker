@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import Form from './Form'
-import {GetPlayerSummaries, GetSteamIdByUsername} from '../apis/steam'
+import Games from './Games'
+import {GetPlayerSummaries} from '../apis/steam'
 
 
 function Home  (props)  {
 
   const [showProfile, setShowProfile] = useState(null)
   const [showForm, setShowForm] = useState(false)
+  const [profileVisible, setProfileVisible] = useState(false)
 
   const fetchSummary = () => {
     GetPlayerSummaries()
@@ -33,7 +35,6 @@ function Home  (props)  {
     setProfileVisible(!profileVisible)
   }
   
-  const[profileVisible, setProfileVisible] = useState(false)
   
   const displayInfo = () => {
     return (<ul>
@@ -59,6 +60,11 @@ function Home  (props)  {
 
       <button onClick={displayProfile}>Show Profile</button>
       {profileVisible && displayInfo()}
+
+      <br></br>
+      <br></br>
+
+      <Games />
     
       </>
     )
