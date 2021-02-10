@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Form from './Form'
 import Games from './Games'
 import {GetPlayerSummaries} from '../apis/steam'
+import StoredProfiles from './StoredProfiles'
 
 
 function Home  (props)  {
@@ -14,7 +15,7 @@ function Home  (props)  {
     GetPlayerSummaries()
     // GetSteamIdByUsername()
       .then(fetchedPlayerSummary => {
-        console.log(fetchedPlayerSummary)
+        // console.log(fetchedPlayerSummary)
         setShowProfile(fetchedPlayerSummary)
       })
   }
@@ -65,7 +66,7 @@ function Home  (props)  {
       <br></br>
 
       <Games />
-    
+      <StoredProfiles/>
       </>
     )
   }

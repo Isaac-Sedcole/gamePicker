@@ -11,6 +11,7 @@ function App ()  {
     <Nav />
     <div>
     <Route path="/" exact component={Home} />
+    
     {/* <Route path="/:rank" exact component={Classifications} /> */}
     </div>
     </>

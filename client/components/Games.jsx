@@ -20,7 +20,7 @@ const Games = (props) => {
     GetSteamIdByUsername()
       .then(fetchedId => {
         setIds(currentId => {
-          console.log(fetchedId)
+          // console.log(fetchedId)
           // console.log("these are the ids ",ids)
           return [
             ...currentId,
@@ -45,7 +45,7 @@ const Games = (props) => {
 
     return (
       <>
-      <button onClick={bigFunc}>Show Games</button>
+      <button onClick={bigFunc}>Show Games (doesnt work) </button>
       {showGames && displayInfo()}
       {/* <ul>
               <li>

@@ -18,3 +18,14 @@ export function GetSteamIdByUsername() {
   return request.get('/api/steam/id')
     .then(res => res.body)
 }
+
+export function addSteamUser(users) {
+  return request.post('/api/steam')
+    .send(users)
+    .then(res => res.body)
+}
+
+export function getAllUsers() {
+  return request.get('/api/steam/users')
+    .then(res => res.body)
+}

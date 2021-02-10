@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const steam = require("./apis")
+const { addUser, getUsers } = require('./db/db')
 
 const server = express()
 
@@ -29,7 +30,14 @@ server.get('/api/steam/id', (req, res) => {
 })
 
 server.post('/api/steam', (req, res) => {
-  
+  addUser
+})
+
+server.get('/api/steam/users', (req, res) => {
+  getUsers()
+  .then(users => {
+    res.json(users)
+  })
 })
 
 module.exports = server

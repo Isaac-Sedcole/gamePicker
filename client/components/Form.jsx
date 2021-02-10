@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { addSteamUser } from '../apis/steam'
+
 
 
 
@@ -6,7 +8,6 @@ import React, { useState } from 'react'
 const Form = () => {
   const [formData, setFormData] = useState({
     name: '',
-    userName: '',
     profileLink: ''
   })
 
@@ -40,47 +41,35 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    console.log(formData)
+    addSteamUser(formData)
 
     //send to new page called <Results/>
     //Display the stats relevant towards that person
     // <Link to /results/{userName}/>
     // props.updateName(formData.name)
   }
+  let count = 1
   return (
     <>
       <form onSubmit={handleSubmit}>
         {form.map(item => (
         <>
-        {/* {key=item.id} */}
-        <h2>User 1:</h2>
+        <h2>User {count++}:</h2>
           <label>
             Name: <br></br>
-            <input type="text" name="name" placeholder="Isaac" onChange={handleChange} value={item.name} />
+            <input type="text" name="name" placeholder="Isaac" onChange={handleChange} />
           </label>
 
           <br></br>
           <label>
             Profile Link: <br></br>
-            <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} value={item.profileLink} required />
+            <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} required />
           </label>
 
           <br></br>
           </>
 ))}
-      {/* <h2>User 1:</h2>
-          <label>
-          Name: <br></br>
-          <input type="text" name="name" placeholder="Isaac" onChange={handleChange} />
-          </label>
-          
-          <br></br>
-          <label>
-          Profile Link: <br></br>
-          <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} required />
-          </label>
-          
-          <br></br>
-           */}
           <button onClick={onAddClick}>Add forms</button>
           <br></br>
         <button>Send</button>
