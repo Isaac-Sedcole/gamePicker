@@ -54,13 +54,13 @@ function Home  (props)  {
       <h1>HomePage</h1>
       <div>
       {/* {showForm && (<Form />)} */}
-      <AddUser showForm={showForm} setShowForm={setShowForm}/>
+      {/* <AddUser showForm={showForm} setShowForm={setShowForm}/> */}
       {/* <button onClick={bigFunc}>Show Form</button> */}
       </div>
 
       <br></br>
       <br></br>
-
+      <h2>external api stuff</h2>
       <button onClick={displayProfile}>Show Profile</button>
       {profileVisible && displayInfo()}
 
@@ -68,7 +68,10 @@ function Home  (props)  {
       <br></br>
 
       <Games />
-      <StoredProfiles/>
+      <h2>internal api stuff</h2>
+      <StoredProfiles />
+
+      <h2>combined api stuff</h2>
       </>
     )
   }

@@ -29,3 +29,11 @@ export function getAllUsers() {
   return request.get('/api/steam/users')
     .then(res => res.body)
 }
+
+export function getUserByName(name) {
+  return request.get('api/steam/'+name)
+    .then(res => {
+      // console.log(res.body)
+      return res.body
+    })
+  }
