@@ -3,6 +3,7 @@ import Form from './Form'
 import Games from './Games'
 import {GetPlayerSummaries} from '../apis/steam'
 import StoredProfiles from './StoredProfiles'
+import AddUser from './AddUser'
 
 
 function Home  (props)  {
@@ -52,8 +53,9 @@ function Home  (props)  {
     <>
       <h1>HomePage</h1>
       <div>
-      <button onClick={bigFunc}>Show Form</button>
-      {showForm && (<Form />)}
+      {/* {showForm && (<Form />)} */}
+      <AddUser showForm={showForm} setShowForm={setShowForm}/>
+      {/* <button onClick={bigFunc}>Show Form</button> */}
       </div>
 
       <br></br>

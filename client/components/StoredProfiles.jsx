@@ -1,43 +1,67 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {getAllUsers} from '../apis/steam'
 
 const StoredProfiles = (props) => {
 
 
   const [showProfiles, setShowProfiles] = useState(false)
-  const [profiles , setProfiles] = useState(
-    [
-      {
-        id: "",
-        name: "",
-        profileLink: ""
-      }
-    ]
-  )
+  const [profiles , setProfiles] = useState([{
+    id:null,
+    name:'',
+    profileLink:''
+  }])
+
+  useEffect(() => {
+    loadProfiles()
+  },[])
+
+  const loadProfiles = () => {
+    getAllUsers()
+    .then(users => {
+      setProfiles(state => {
+        const userProfiles = []
+        users.map(user => {
+          userProfiles.push(user)
+          return user
+        })
+        state = userProfiles
+        return state
+      })
+  })
+}
 
   const handleClick = () => {
     setShowProfiles(!showProfiles)
-    getAllUsers()
-    .then(users => {
-      setProfiles(profiles.push(users))
-      console.log("profiles: ",profiles)
-      console.log("users: ", users)
-    })
-  }
+    loadProfiles()
+      
+      // let usersd = users.map(user => {
+      //   return user
+      // })
+      // console.log(usersd)
+      // console.log(profiles)
+    }
+ 
+
+  // console.log(profiles)
 
     return (
-      <>
+      <div>
       <h1>StoredProfiles</h1>
-      <button onClick={handleClick}>Show all profiles saved</button>
+      <button onClick={handleClick}>Show all profiles saved in db</button>
 
       {showProfiles && profiles.map(profile => {
-        <p>{profile.name}</p>
+        return (
+          <div key={profile.id}> 
+          <h3>{profile.name}</h3>
+            <ul >
+             <li>{profile.profileLink}</li>
+        </ul> 
+        </div>
+      )
       })}
-      {/* 
-      Stores profiles and allows you to select them in tickboxes and click submit to compare
-      games and show the recommended ones owned between all people
-      */}
-      </>
+
+    
+      </div>
     )
   }
   

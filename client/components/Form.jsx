@@ -37,7 +37,7 @@ const Form = () => {
       ]
     })
   }
-  console.log(form)
+  // console.log(form)
 
   const handleSubmit = (event) => {
     event.preventDefault()

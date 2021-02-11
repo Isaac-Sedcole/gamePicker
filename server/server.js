@@ -30,7 +30,11 @@ server.get('/api/steam/id', (req, res) => {
 })
 
 server.post('/api/steam', (req, res) => {
-  addUser
+  const user = req.body
+  addUser(user)
+    .then(id => {
+      res.json(id)
+    })
 })
 
 server.get('/api/steam/users', (req, res) => {
