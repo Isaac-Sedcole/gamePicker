@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const steam = require("./apis")
-const { addUser, getUsers } = require('./db/db')
+const { addUser, getUsers, getUser } = require('./db/db')
 
 const server = express()
 
@@ -41,6 +41,15 @@ server.get('/api/steam/users', (req, res) => {
   getUsers()
   .then(users => {
     res.json(users)
+  })
+})
+
+server.get('/api/steam/:name', (req, res)=> {
+  const name = req.params.name
+  // console.log(name)
+  getUser(name)
+  .then(user => {
+    res.json(user)
   })
 })
 

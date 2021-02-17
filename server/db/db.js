@@ -10,10 +10,17 @@ function getUsers (db = connection) {
 function addUser(user, db = connection) {
   return db('users')
   .insert(user)
-  
+}
+
+function getUser(name, db=connection) {
+  return db('users')
+  .where("name", name)
+  .first()
+  .select()
 }
 
 module.exports = {
   getUsers,
-  addUser
+  addUser,
+  getUser
 }

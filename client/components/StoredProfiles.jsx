@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 import {getAllUsers} from '../apis/steam'
+import AddUser from './AddUser'
 
 const StoredProfiles = (props) => {
 
@@ -46,16 +48,18 @@ const StoredProfiles = (props) => {
 
     return (
       <div>
+      <AddUser loadProfiles={loadProfiles}/>
       <h1>StoredProfiles</h1>
       <button onClick={handleClick}>Show all profiles saved in db</button>
 
       {showProfiles && profiles.map(profile => {
         return (
           <div key={profile.id}> 
-          <h3>{profile.name}</h3>
+          <h3><Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3>
             <ul >
              <li>{profile.profileLink}</li>
         </ul> 
+        
         </div>
       )
       })}

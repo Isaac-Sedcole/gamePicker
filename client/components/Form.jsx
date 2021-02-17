@@ -5,7 +5,7 @@ import { addSteamUser } from '../apis/steam'
 
 
 
-const Form = () => {
+const Form = (props) => {
   const [formData, setFormData] = useState({
     name: '',
     profileLink: ''
@@ -43,6 +43,17 @@ const Form = () => {
     event.preventDefault()
     console.log(formData)
     addSteamUser(formData)
+    // props.loadProfiles()
+    setForm([
+      {
+        name:"",
+        profileLink:""
+      }
+    ])
+    setFormData({
+      name:"",
+      profileLink:""
+    })
 
     //send to new page called <Results/>
     //Display the stats relevant towards that person
@@ -58,13 +69,13 @@ const Form = () => {
         <h2>User {count++}:</h2>
           <label>
             Name: <br></br>
-            <input type="text" name="name" placeholder="Isaac" onChange={handleChange} />
+            <input type="text" name="name" placeholder="Isaac" onChange={handleChange} value={formData.name}/>
           </label>
 
           <br></br>
           <label>
             Profile Link: <br></br>
-            <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} required />
+            <input type="text" name="profileLink" placeholder="https://steamcommunity.com/id/sedcole/" onChange={handleChange} value={formData.profileLink} required />
           </label>
 
           <br></br>
