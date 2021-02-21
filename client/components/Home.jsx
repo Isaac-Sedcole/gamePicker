@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Form from './Form'
-import Games from './Games'
+// import Games from './Games'
 import {GetPlayerSummaries} from '../apis/steam'
 import StoredProfiles from './StoredProfiles'
 import AddUser from './AddUser'
+import RecommendedGames from './RecommendedGames'
 
 
 function Home  (props)  {
@@ -67,11 +68,12 @@ function Home  (props)  {
       <br></br>
       <br></br>
 
-      <Games />
+      {/* <Games /> */}
       <h2>internal api stuff</h2>
       <StoredProfiles />
 
       <h2>combined api stuff</h2>
+      <RecommendedGames />
       </>
     )
   }

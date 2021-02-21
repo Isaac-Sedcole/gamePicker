@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import {getAllUsers} from '../apis/steam'
 import AddUser from './AddUser'
 import { connect } from 'react-redux'
+import { addCompareList } from '../actions/userList'
 
 
 const StoredProfiles = (props) => {
@@ -14,11 +15,17 @@ const StoredProfiles = (props) => {
     name:'',
     profileLink:''
   }])
-
+  
   useEffect(() => {
     loadProfiles()
   },[])
+  
+  useEffect(() => {
+    props.dispatch(addCompareList(compareList))
+  },[compareList])
 
+  
+  
   const loadProfiles = () => {
     getAllUsers()
     .then(users => {
@@ -31,17 +38,17 @@ const StoredProfiles = (props) => {
         state = userProfiles
         return state
       })
-  })
-}
-
+    })
+  }
+  
   const handleClick = () => {
     setShowProfiles(!showProfiles)
     loadProfiles()
-      
-      // let usersd = users.map(user => {
+    
+    // let usersd = users.map(user => {
       //   return userStoredProfiles
     }
-
+    
     const checkBoxHandler =  (user) => {
       setCompareList(currentList => {
         let newArr = currentList.filter(person => {
@@ -51,8 +58,8 @@ const StoredProfiles = (props) => {
         ?  [...newArr, user]
         : [...newArr]
       })
-      props.dispatch(comparingList(compareList))
     }
+    
  
 
   // console.log(profiles)
@@ -74,7 +81,10 @@ const StoredProfiles = (props) => {
         </div>
       )
       })}
+      <br></br>
+      <br></br>
 
+      <Link to="/recommendedgames">Find games in common!</Link>
     
       </div>
     )
