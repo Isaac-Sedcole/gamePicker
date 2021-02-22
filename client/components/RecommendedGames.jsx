@@ -25,40 +25,52 @@ const RecommendedGames = (props) => {
   const fetchGames = () => {
     //if profileLink == user.profileLink then we have the right person and need their steamid
     //map through props.userlist and for each user call getOwnedGames
-    props.userList.map(user => {
+    Promise.all(props.userList.map(user => {
       //check if id or profile in profileLink
       //this is the specific part of string where it will say either id or profile
       if(user.profileLink.substr(27, 2) == "id") {
         let username = user.profileLink.substr(30,user.profileLink.length-31)
-        GetSteamIdByUsername(username)
+        return GetSteamIdByUsername(username)
         .then(steamIdObj => {
-          console.log(steamIdObj.response.steamid)
-          // console.log(steamIdObj)
-          GetOwnedGames(steamIdObj.response.steamid)
+          return GetOwnedGames(steamIdObj.response.steamid)
           .then(allOwnedGames => {
-            // console.log(allOwnedGames)
-            console.log(allOwnedGames.response.game_count)
-            allOwnedGames.response.games.map(game => {
-              // gameAppIdArr.push(game.appid)
-              setGames(priorGames => {
-                return [
-                  ...priorGames,
-                  game
-                ]
-              })
-              // console.log(game.appid)
-              // console.log(game.name)
-              // console.log(game.playtime_forever)
-              return null
-            })
-            // console.log(gameAppIdArr)
+            return allOwnedGames.response.games
           })
         })
+      } else if(user.profileLink.substr(27, 8) == "profiles") {
+        let id = user.profileLink.substr(36,user.profileLink.length-36)
+          return GetOwnedGames(id)
+          .then(allOwnedGames => {
+            return allOwnedGames.response.games
+          })
+      }else {
+        return Promise.resolve()
       }
-      return null
+    }))
+    .then((totalGames) => {
+      // filter the games
+
+      const games = totalGames.flat()
+      // console.log(games.length)
+
+      const reducedGames = games.reduce((games, game) => {
         
-      })
+        if(!games[game.appid])  {
+          games[game.appid] = { ...game, count: 1 }
+        } else {
+          games[game.appid].count++
+        }
+
+        return games
+      }, {})
+
+      const filteredGames = Object.values(reducedGames).filter(game => game.count == props.userList.length)
+      console.log(filteredGames.length)
+      console.log(filteredGames)
+    })
     }
+
+    
 
     console.log(games)
       // .then(allUsers => {
