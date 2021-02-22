@@ -29,7 +29,10 @@ const RecommendedGames = (props) => {
       //check if id or profile in profileLink
       //this is the specific part of string where it will say either id or profile
       if(user.profileLink.substr(27, 2) == "id") {
-        let username = user.profileLink.substr(30,user.profileLink.length-31)
+        let username = user.profileLink.substr(30,user.profileLink.length-30)
+        if(username[username.length-1] == "/") {
+          username = username.substr(0,username.length-1)
+        }
         return GetSteamIdByUsername(username)
         .then(steamIdObj => {
           return GetOwnedGames(steamIdObj.response.steamid)
@@ -72,7 +75,7 @@ const RecommendedGames = (props) => {
 
     
 
-    console.log(games)
+    // console.log(games)
       // .then(allUsers => {
       //   if(allUsers) {
 
