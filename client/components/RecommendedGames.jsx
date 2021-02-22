@@ -32,17 +32,21 @@ const RecommendedGames = (props) => {
         GetSteamIdByUsername(username)
         .then(steamIdObj => {
           // console.log(steamIdObj.response.steamid)
+          // console.log(steamIdObj)
           GetOwnedGames(steamIdObj.response.steamid)
           .then(allOwnedGames => {
+            console.log(allOwnedGames)
             console.log(allOwnedGames.response.game_count)
-            console.log(allOwnedGames.games.map(game => {
-              console.log(game.appid)
-              console.log(game.name)
-              console.log(game.playtime_forever)
-              return null
-            }))
+            // allOwnedGames.games.map(game => {
+            //   console.log(game.appid)
+            //   console.log(game.name)
+            //   console.log(game.playtime_forever)
+            //   return null
+            })
           })
-        })
+        }
+        return null
+      })
         
       }
       // .then(allUsers => {
@@ -54,8 +58,8 @@ const RecommendedGames = (props) => {
       // .then(games => {
       //   console.log(games.response.game_count)
       // })
-    })
-  }
+    
+  
 
   const handleRedirect = () => {
     setRedirect(true)
@@ -70,10 +74,10 @@ const RecommendedGames = (props) => {
 
       {!showLink && props.userList.map(person => {
         return (
-          <>
-            <h3 key={person.id}>{person.name}</h3>
+          <div key={person.id}>
+            <h3 >{person.name}</h3>
             <li >{person.profileLink}</li>
-          </>
+          </div>
         )
       })} 
       </ul>

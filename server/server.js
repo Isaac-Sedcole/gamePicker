@@ -16,9 +16,13 @@ server.get('/api/steam', (req, res) => {
 })
 
 server.get('/api/steam/games', (req, res) => {
+  // console.log(req.body)
   steam.GetOwnedGames()
     .then(body => {
       res.json(body)
+    })
+    .catch(err => {
+      
     })
 })
 
