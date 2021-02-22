@@ -10,16 +10,15 @@ export function GetPlayerSummaries() {
 //returns object { "response" { "game_count":766, "games": [{"appid:240","name":Counter-Strike Source, "playtime_forever":0,},{}]}}
 export function GetOwnedGames(id) {
   //gives total games owned, games id and total playtime in minutes
-  return request.get('/api/steam/games')
+  return request.get('/api/steam/external/games/'+id)
     .then(res => {
       console.log(res.body)
       return res.body})
 }
 
 //returns object { "response": {"steamid": "76561198012220748", "success": 1}}
-export function GetSteamIdByUsername() {
-  //gives total games owned, games id and total playtime in minutes
-  return request.get('/api/steam/id')
+export function GetSteamIdByUsername(name) {
+  return request.get('/api/steam/external/'+name)
     .then(res =>  {
       // console.log(res.body)
       return res.body})

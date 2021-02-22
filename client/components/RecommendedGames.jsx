@@ -9,6 +9,7 @@ const RecommendedGames = (props) => {
   const [redirect, setRedirect] = useState(false)
   const [games, setGames] = useState([])
   const [gameCount, setGameCount] = useState(0)
+  // const [games, setGames] = useState([])
 
 
   useEffect(() => {
@@ -31,24 +32,35 @@ const RecommendedGames = (props) => {
         let username = user.profileLink.substr(30,user.profileLink.length-31)
         GetSteamIdByUsername(username)
         .then(steamIdObj => {
-          // console.log(steamIdObj.response.steamid)
+          console.log(steamIdObj.response.steamid)
           // console.log(steamIdObj)
           GetOwnedGames(steamIdObj.response.steamid)
           .then(allOwnedGames => {
-            console.log(allOwnedGames)
+            // console.log(allOwnedGames)
             console.log(allOwnedGames.response.game_count)
-            // allOwnedGames.games.map(game => {
-            //   console.log(game.appid)
-            //   console.log(game.name)
-            //   console.log(game.playtime_forever)
-            //   return null
+            allOwnedGames.response.games.map(game => {
+              // gameAppIdArr.push(game.appid)
+              setGames(priorGames => {
+                return [
+                  ...priorGames,
+                  game
+                ]
+              })
+              // console.log(game.appid)
+              // console.log(game.name)
+              // console.log(game.playtime_forever)
+              return null
             })
+            // console.log(gameAppIdArr)
           })
-        }
-        return null
-      })
-        
+        })
       }
+      return null
+        
+      })
+    }
+
+    console.log(games)
       // .then(allUsers => {
       //   if(allUsers) {
 

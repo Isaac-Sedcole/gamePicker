@@ -15,9 +15,24 @@ server.get('/api/steam', (req, res) => {
     })
 })
 
-server.get('/api/steam/games', (req, res) => {
+
+server.post('/api/steam', (req, res) => {
+  const user = req.body
+  addUser(user)
+  .then(id => {
+    res.json(id)
+  })
+})
+
+server.get('/api/steam/users', (req, res) => {
+  getUsers()
+  .then(users => {
+    res.json(users)
+  })
+})
+server.get('/api/steam/external/games/:id', (req, res) => {
   // console.log(req.body)
-  steam.GetOwnedGames()
+  steam.GetOwnedGames(req.params.id)
     .then(body => {
       res.json(body)
     })
@@ -26,26 +41,11 @@ server.get('/api/steam/games', (req, res) => {
     })
 })
 
-server.get('/api/steam/id', (req, res) => {
-  steam.GetSteamIdByUsername()
+server.get('/api/steam/external/:name', (req, res) => {
+  steam.GetSteamIdByUsername(req.params.name)
     .then(body => {
       res.json(body)
     })
-})
-
-server.post('/api/steam', (req, res) => {
-  const user = req.body
-  addUser(user)
-    .then(id => {
-      res.json(id)
-    })
-})
-
-server.get('/api/steam/users', (req, res) => {
-  getUsers()
-  .then(users => {
-    res.json(users)
-  })
 })
 
 server.get('/api/steam/:name', (req, res)=> {
