@@ -97,23 +97,27 @@ const RecommendedGames = (props) => {
     //every space turns into _
     //every special character is removed
     //specifically look for - and :
-    let newName 
+    // let name 
     //look for space within name
-    if(name.includes(" ")){
       for(let i = 0; i < name.length; i++) {
-        if(name[i] == " ") {
-          newName = setCharAt(name, i, "_")
+        if(name[i] == ":" || name[i] == "-") {
+          name = setCharAt(name, i, "")
+          // console.log("second if: ",name)
         }
+        if(name[i] == " ") {
+          name = setCharAt(name, i, "_")
+          // console.log("first if: ",name)
+        }
+        // console.log(name[7])
       }
       // let ind = name.indexOf(" ")
-      // newName = setCharAt(name, ind, "_")
+      // name = setCharAt(name, ind, "_")
       //let slicedName = name.slice(0, ind)
-    }
-    if(name.includes("-") || name.includes(":")) {
-      console.log("found a '-' or ':' in ",name)
-    }
-    console.log(newName)
-    return newName
+    
+      
+    
+    console.log(name)
+    return name
   }
 
   const setCharAt = (string, index, character) => {
@@ -122,6 +126,11 @@ const RecommendedGames = (props) => {
   }
 
   // console.log(props.userList)
+
+  const sendToStorePage = (name) => {
+
+
+  }
 
     return (
       <>
@@ -136,13 +145,28 @@ const RecommendedGames = (props) => {
       })} 
 
       These are the games you have in common:
+      {/* <ul>
+        {games.map(game => {
+      
+          return (
+            <>
+          <li>{game.appid}</li>
+          <li>{game.name}</li>
+          </>
+        )
+          
+        })}
+      </ul> */}
       <ul>
         {games.map(game => {
-          <li key={game.appid}><a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a></li>
-          return null
+          return (
+          <li key={game.appid}><img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
+          <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a></li>
+          )
         })}
       </ul>
 
+      {/* <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}> */}
       {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add people</p> }
     
     {redirect && <Redirect to="/profiles" />}
