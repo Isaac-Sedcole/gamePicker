@@ -68,8 +68,9 @@ const RecommendedGames = (props) => {
       }, {})
 
       const filteredGames = Object.values(reducedGames).filter(game => game.count == props.userList.length)
-      console.log(filteredGames.length)
-      console.log(filteredGames)
+      // console.log(filteredGames.length)
+      // console.log(filteredGames)
+      setGames(filteredGames)
     })
     }
 
@@ -92,22 +93,56 @@ const RecommendedGames = (props) => {
     setRedirect(true)
   }
 
+  const parsedName = (name) => {
+    //every space turns into _
+    //every special character is removed
+    //specifically look for - and :
+    let newName 
+    //look for space within name
+    if(name.includes(" ")){
+      for(let i = 0; i < name.length; i++) {
+        if(name[i] == " ") {
+          newName = setCharAt(name, i, "_")
+        }
+      }
+      // let ind = name.indexOf(" ")
+      // newName = setCharAt(name, ind, "_")
+      //let slicedName = name.slice(0, ind)
+    }
+    if(name.includes("-") || name.includes(":")) {
+      console.log("found a '-' or ':' in ",name)
+    }
+    console.log(newName)
+    return newName
+  }
+
+  const setCharAt = (string, index, character) => {
+    if(index > string.length-1) return string
+    return string.substr(0,index) + character + string.substr(index+1)
+  }
+
   // console.log(props.userList)
 
     return (
       <>
       <h1>RecommendedGames</h1>
-      <ul>
 
       {!showLink && props.userList.map(person => {
         return (
           <div key={person.id}>
             <h3 >{person.name}</h3>
-            <li >{person.profileLink}</li>
           </div>
         )
       })} 
+
+      These are the games you have in common:
+      <ul>
+        {games.map(game => {
+          <li key={game.appid}><a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a></li>
+          return null
+        })}
       </ul>
+
       {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add people</p> }
     
     {redirect && <Redirect to="/profiles" />}
