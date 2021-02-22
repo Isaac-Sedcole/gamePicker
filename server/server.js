@@ -8,12 +8,6 @@ const server = express()
 server.use(express.json())
 server.use(express.static(path.join(__dirname, './public')))
 
-server.get('/api/steam', (req, res) => {
-  steam.GetPlayerSummaries()
-    .then(body => {
-      res.json(body)
-    })
-})
 
 
 server.post('/api/steam', (req, res) => {
@@ -30,14 +24,22 @@ server.get('/api/steam/users', (req, res) => {
     res.json(users)
   })
 })
+
 server.get('/api/steam/external/games/:id', (req, res) => {
   // console.log(req.body)
   steam.GetOwnedGames(req.params.id)
+  .then(body => {
+    res.json(body)
+  })
+  .catch(err => {
+    
+  })
+})
+
+server.get('/api/steam/playersumm:id', (req, res) => {
+  steam.GetPlayerSummaries(req.params.id)
     .then(body => {
       res.json(body)
-    })
-    .catch(err => {
-      
     })
 })
 

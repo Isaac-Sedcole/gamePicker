@@ -1,9 +1,9 @@
 import request from 'superagent'
 
-export function GetPlayerSummaries() {
+export function GetPlayerSummaries(id) {
   // return request.get(baseUrl + 'ISteamUser/GetPlayerSummaries/v0002/' + endUrl)
   //gives userID, profile link
-  return request.get('/api/steam')
+  return request.get('/api/steam/playersumm/'+id)
     .then(res => res.body)
 }
 
