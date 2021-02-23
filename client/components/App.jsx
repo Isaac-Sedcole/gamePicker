@@ -11,7 +11,7 @@ function App ()  {
   
   return (
     <>
-    <h1>React development has begun!</h1>
+    <h1>Game Picker</h1>
     <Nav />
     <div>
     <Route path="/" exact component={Home} />

@@ -36,7 +36,8 @@ server.get('/api/steam/external/games/:id', (req, res) => {
   })
 })
 
-server.get('/api/steam/playersumm:id', (req, res) => {
+server.get('/api/steam/playersumm/:id', (req, res) => {
+  // console.log(req.params.id)
   steam.GetPlayerSummaries(req.params.id)
     .then(body => {
       res.json(body)

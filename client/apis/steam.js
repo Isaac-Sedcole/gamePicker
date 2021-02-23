@@ -3,6 +3,7 @@ import request from 'superagent'
 export function GetPlayerSummaries(id) {
   // return request.get(baseUrl + 'ISteamUser/GetPlayerSummaries/v0002/' + endUrl)
   //gives userID, profile link
+  // console.log(id)
   return request.get('/api/steam/playersumm/'+id)
     .then(res => res.body)
 }

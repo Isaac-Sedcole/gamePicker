@@ -41,7 +41,7 @@ const Form = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(formData)
+    // console.log(formData)
     addSteamUser(formData)
     // props.loadProfiles()
     setForm([
@@ -65,7 +65,7 @@ const Form = (props) => {
     <>
       <form onSubmit={handleSubmit}>
         {form.map(item => (
-        <>
+          <>
         <h2>User {count++}:</h2>
           <label>
             Name: <br></br>

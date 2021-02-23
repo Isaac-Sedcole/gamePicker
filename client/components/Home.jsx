@@ -13,8 +13,9 @@ function Home  (props)  {
   const [showForm, setShowForm] = useState(false)
   const [profileVisible, setProfileVisible] = useState(false)
 
+  const id = "76561198054358315"
   const fetchSummary = () => {
-    GetPlayerSummaries()
+    GetPlayerSummaries(id)
     // GetSteamIdByUsername()
       .then(fetchedPlayerSummary => {
         // console.log(fetchedPlayerSummary)
@@ -52,7 +53,7 @@ function Home  (props)  {
   
   return (
     <>
-      <h1>HomePage</h1>
+      {/* <h1>HomePage</h1> */}
       <div>
       {/* {showForm && (<Form />)} */}
       {/* <AddUser showForm={showForm} setShowForm={setShowForm}/> */}

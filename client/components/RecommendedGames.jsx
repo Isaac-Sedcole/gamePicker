@@ -8,8 +8,8 @@ const RecommendedGames = (props) => {
   const [showLink, setShowLink] = useState(true)
   const [redirect, setRedirect] = useState(false)
   const [games, setGames] = useState([])
-  const [gameCount, setGameCount] = useState(0)
-  // const [games, setGames] = useState([])
+  const [selectedGame, setSelectedGame] = useState(null)
+  const [showSelected, setShowSelected] = useState(false)
 
 
   useEffect(() => {
@@ -18,7 +18,6 @@ const RecommendedGames = (props) => {
     } else {
       setShowLink(false)
     }
-
     fetchGames()
   }, [])
 
@@ -51,10 +50,8 @@ const RecommendedGames = (props) => {
       }
     }))
     .then((totalGames) => {
-      // filter the games
 
       const games = totalGames.flat()
-      // console.log(games.length)
 
       const reducedGames = games.reduce((games, game) => {
         
@@ -72,51 +69,22 @@ const RecommendedGames = (props) => {
       // console.log(filteredGames)
       setGames(filteredGames)
     })
-    }
-
-    
-
-    // console.log(games)
-      // .then(allUsers => {
-      //   if(allUsers) {
-
-      //   }
-      // })
-      // GetOwnedGames(user)
-      // .then(games => {
-      //   console.log(games.response.game_count)
-      // })
-    
+    } 
   
-
   const handleRedirect = () => {
     setRedirect(true)
   }
 
   const parsedName = (name) => {
-    //every space turns into _
-    //every special character is removed
-    //specifically look for - and :
-    // let name 
-    //look for space within name
       for(let i = 0; i < name.length; i++) {
         if(name[i] == ":" || name[i] == "-") {
           name = setCharAt(name, i, "")
-          // console.log("second if: ",name)
         }
         if(name[i] == " ") {
           name = setCharAt(name, i, "_")
-          // console.log("first if: ",name)
         }
-        // console.log(name[7])
       }
-      // let ind = name.indexOf(" ")
-      // name = setCharAt(name, ind, "_")
-      //let slicedName = name.slice(0, ind)
-    
-      
-    
-    console.log(name)
+    // console.log(name)
     return name
   }
 
@@ -125,16 +93,28 @@ const RecommendedGames = (props) => {
     return string.substr(0,index) + character + string.substr(index+1)
   }
 
-  // console.log(props.userList)
+  const handleRandomGameSelector = () => {
+    let randoNumba = getRandomInt(games.length - 1)
+    let selectedGameLocal = null
+    for(let i = 0; i<games.length;i++) {
+      if(randoNumba == i) {
+        selectedGameLocal = games[i]
+      }
+    }
+    // console.log(selectedGameLocal)
+    setSelectedGame(selectedGameLocal)
+    setShowSelected(true)
+  }
 
-  const sendToStorePage = (name) => {
-
-
+  const getRandomInt = (max) => {
+    let min = 0
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
     return (
       <>
-      <h1>RecommendedGames</h1>
+      <h1>Recommended Games</h1>
 
       {!showLink && props.userList.map(person => {
         return (
@@ -142,21 +122,17 @@ const RecommendedGames = (props) => {
             <h3 >{person.name}</h3>
           </div>
         )
-      })} 
-
+      })}
+      {!showLink && <div>You have: {games.length} games in common
+      <br></br>
+      <br></br>
+      {!showLink && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
+      <br></br>
+      <br></br>
+      {showSelected && <h3>{selectedGame.name}</h3>}
+      <br></br>
+      <br></br>
       These are the games you have in common:
-      {/* <ul>
-        {games.map(game => {
-      
-          return (
-            <>
-          <li>{game.appid}</li>
-          <li>{game.name}</li>
-          </>
-        )
-          
-        })}
-      </ul> */}
       <ul>
         {games.map(game => {
           return (
@@ -165,24 +141,13 @@ const RecommendedGames = (props) => {
           )
         })}
       </ul>
+      </div>
+}
 
-      {/* <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}> */}
+
       {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add people</p> }
     
     {redirect && <Redirect to="/profiles" />}
-      {/* 
-      Algorithm for sorting which games to recommend first
-
-      goes by tiers, from top to bottom of most to least important factors
-      - everyone has to own game
-      - playtime forever
-      rest is stretch
-      - recent review status
-      - overall review status
-      -
-      -
-      -
-       */}
       </>
     )
   }
