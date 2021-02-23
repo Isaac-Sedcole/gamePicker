@@ -10,6 +10,8 @@ const RecommendedGames = (props) => {
   const [games, setGames] = useState([])
   const [selectedGame, setSelectedGame] = useState(null)
   const [showSelected, setShowSelected] = useState(false)
+  const [recommendedGames, setRecommendedGames] = useState([])
+  const [showRecommended, setShowRecommended] = useState(false)
 
 
   useEffect(() => {
@@ -48,7 +50,8 @@ const RecommendedGames = (props) => {
       }else {
         return Promise.resolve()
       }
-    }))
+    })) //promise.all means the entire thing will wait before running then - make sure to return all
+    //async related things
     .then((totalGames) => {
 
       const games = totalGames.flat()
@@ -65,9 +68,12 @@ const RecommendedGames = (props) => {
       }, {})
 
       const filteredGames = Object.values(reducedGames).filter(game => game.count == props.userList.length)
+      const filteredRecommendedGames = Object.values(reducedGames).filter(game => game.count == (props.userList.length -1))
+      
       // console.log(filteredGames.length)
       // console.log(filteredGames)
       setGames(filteredGames)
+      setRecommendedGames(filteredRecommendedGames)
     })
     } 
   
@@ -112,6 +118,10 @@ const RecommendedGames = (props) => {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
+  const handleShowRecommended = () => {
+    setShowRecommended(!showRecommended)
+  }
+
     return (
       <>
       <h1>Recommended Games</h1>
@@ -130,6 +140,18 @@ const RecommendedGames = (props) => {
       <br></br>
       <br></br>
       {showSelected && <h3>{selectedGame.name}</h3>}
+      <br></br>
+      <br></br>
+      <button onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
+      <br></br>
+      <ul>
+      {showRecommended && recommendedGames.map(game => {
+        return (
+          <li key={game.appid}><img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
+          <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a></li>
+          )
+        })}
+      </ul>
       <br></br>
       <br></br>
       These are the games you have in common:

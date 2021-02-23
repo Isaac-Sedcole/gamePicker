@@ -42,3 +42,4 @@ module.exports = {
 
 //to install SQLITE do: sudo apt install python-is-python3 for linux (on campus)
 //npm i --save sqlite3@4
+//check for make and python-is-python3 - make is something like sudo apt install build-essentials
