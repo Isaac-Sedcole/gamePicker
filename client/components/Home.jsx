@@ -57,39 +57,40 @@ function Home  (props)  {
     <section className="hero is-fullheight is-default is-bold">
       <div className="hero-body">
         <div className="container has-text-centered">
-          <div className="columns is-vcentered">
+          <div className="row is-vcentered">
+            <div className="row is-5">
+
             <p className="has-text-centered"><Link className="button is-medium is-info is-outlined" to="/">Home</Link></p>
+            </div>
+            <br></br>
+            <br></br>
+            <div className="row is-6">
 
+            <h2>external api stuff</h2>
+            <button onClick={displayProfile}>Show Profile</button>
+            {profileVisible && displayInfo()}
+            </div>
+
+            <br></br>
+            <br></br> 
+            <div className="row is-3">
+            <br></br>
+            <br></br>
+            <h2>internal api stuff</h2>
+            <StoredProfiles />
+            </div>
+            <br></br>
+            <br></br>
+            <div className="row is-4">
+
+            <h2>combined api stuff</h2>
+            <RecommendedGames />
+            </div>
           </div>
-
         </div>
-
       </div>
-
     </section>
-      {/* <h1>HomePage</h1> */}
-      <div>
-      {/* {showForm && (<Form />)} */}
-      {/* <AddUser showForm={showForm} setShowForm={setShowForm}/> */}
-      {/* <button onClick={bigFunc}>Show Form</button> */}
-      </div>
-
-      <br></br>
-      <br></br>
-      <h2>external api stuff</h2>
-      <button onClick={displayProfile}>Show Profile</button>
-      {profileVisible && displayInfo()}
-
-      <br></br>
-      <br></br>
-
-      {/* <Games /> */}
-      <h2>internal api stuff</h2>
-      <StoredProfiles />
-
-      <h2>combined api stuff</h2>
-      <RecommendedGames />
-      </>
+    </>
     )
   }
   

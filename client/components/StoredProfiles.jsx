@@ -65,28 +65,59 @@ const StoredProfiles = (props) => {
   // console.log(profiles)
 
     return (
-      <div>
-      <AddUser loadProfiles={loadProfiles}/>
-      <h1>StoredProfiles</h1>
-      <button onClick={handleClick}>Show all profiles saved in db</button>
-
-      {showProfiles && profiles.map(profile => {
-        return (
-          <div key={profile.id}> 
-          <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input><Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3>
-            <ul >
-             <li>{profile.profileLink}</li>
-        </ul> 
-        
+      <>
+      <section className="hero is-info is-medium-is-bold">
+        <div className="hero-body">
         </div>
-      )
-      })}
-      <br></br>
-      <br></br>
+      </section>
 
-      <Link to="/recommendedgames">Find games in common!</Link>
+      <section className="articles">
+        <div className="row is-8 is-offset-2">
+          <div className="container has-text-centered">
+            <div className="card article">
+              <div className="card-content">
+                <div className="row is-10">
+                  <h3 className="title has-text-black">Profiles</h3>
+                
+                  <div className="card article">
+                  <div className="card-content">
+                    <div className="media">
+                      <div className="media-content has-text-centered"></div>
+                        <AddUser loadProfiles={loadProfiles}/>
+                         <h1>StoredProfiles</h1>
+                         <button onClick={handleClick}>Show all profiles saved in db</button>
+
+                        {showProfiles && profiles.map(profile => {
+                          return (
+                            <div key={profile.id}> 
+                           <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input><Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3>
+                           <ul >
+                            <li>{profile.profileLink}</li>
+                           </ul> 
+                          </div>
+                         )
+                        })}
+                        <br></br>
+                        <br></br>
+                      <Link to="/recommendedgames">Find games in common!</Link>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      
     
-      </div>
+      </section>
+      </>
     )
   }
   

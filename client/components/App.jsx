@@ -12,14 +12,14 @@ function App ()  {
   return (
     <>
     <Nav />
-    <div>
+    
     <Route path="/" exact component={Home} />
     <Route path="/profiles" exact component={StoredProfiles}/>
     <Route path="/profiles/:name" exact component={Profile} />
     <Route path="/recommendedgames" exact component={RecommendedGames} />
     
     {/* <Route path="/:rank" exact component={Classifications} /> */}
-    </div>
+    
     </>
   )
 }
