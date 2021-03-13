@@ -70,55 +70,91 @@ const StoredProfiles = (props) => {
         <div className="hero-body">
         </div>
       </section>
-      <ul>
-
+      
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       <section className="articles">
-        <div className="column is-8 is-offset-2">
-          <div className="container has-text-centered">
-            <div className="card article">
-              <div className="card-content">
-                <div className="row is-10 is-offset-10">
-                  <h3 className="title has-text-black">Profiles</h3>
-                
-                  <div className="card article">
-                  <div className="card-content">
-                    <div className="media">
-                      <div className="media-content has-text-centered"></div>
-                        <AddUser loadProfiles={loadProfiles}/>
-                         <p className="title article-title">StoredProfiles</p>
+        <div className="card">
+          <div className="media">
+          <div className="media-content">
+                <div className="content ">
+                  <p className="title is-3 has-text-centered">Profiles</p>
+                  </div>
+                  </div>
+          </div>
+        <div className="card">
+
+          <div className="card-content">
+            <div className="media">
+              <div className="media-content">
+                <div className="content">
+                  <AddUser loadProfiles={loadProfiles}/>
+                  </div>
+                  </div>
+                </div>
+                </div>
+                </div>
+                <br></br>
+                <br></br>
+
+        <div className="card">
+
+                <div className="card-content">
+            <div className="media">
+              <div className="media-content">
+                <div className="content ">
+                  <div className="columns is-vcentered">
+                    <div className="column is-8">
+
+
+                  
+                         <p className="title is-3">StoredProfiles</p>
                          <button onClick={handleClick}>Show all profiles saved in db</button>
 
                         {showProfiles && profiles.map(profile => {
                           return (
                             <div key={profile.id}> 
+                            
+                            <div className="column is-one-quarter">
                            <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input><Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3>
-                           {/* <ul > */}
+                           <ul >
                             <li>{profile.profileLink}</li>
-                           {/* </ul>  */}
+                           </ul>
+                           </div> 
+                           
+
                           </div>
                          )
                         })}
                         <br></br>
                         <br></br>
                       <Link to="/recommendedgames">Find games in common!</Link>
+                        </div>
+                        </div>
                       </div>
-                    </div>
-
                   </div>
                 </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
+                </div>
+                        </div>
+                        </div>
+                        
+                        
       
     
       </section>
-    </ul>
+    
       </>
     )
   }

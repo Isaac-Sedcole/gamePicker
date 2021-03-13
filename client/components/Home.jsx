@@ -71,21 +71,21 @@ function Home  (props)  {
             {profileVisible && displayInfo()}
             </div>
 
-            {/* <br></br>
+            <br></br>
             <br></br> 
-            <div className="row is-3">
+            {/* <div className="row is-3">
             <br></br>
             <br></br>
             <h2>internal api stuff</h2>
             <StoredProfiles />
             </div>
             <br></br>
-            <br></br>
+            <br></br> */}
             <div className="row is-4">
 
             <h2>combined api stuff</h2>
             <RecommendedGames />
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
