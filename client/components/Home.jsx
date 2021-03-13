@@ -71,7 +71,7 @@ function Home  (props)  {
             {profileVisible && displayInfo()}
             </div>
 
-            <br></br>
+            {/* <br></br>
             <br></br> 
             <div className="row is-3">
             <br></br>
@@ -85,7 +85,7 @@ function Home  (props)  {
 
             <h2>combined api stuff</h2>
             <RecommendedGames />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

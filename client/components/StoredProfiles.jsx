@@ -70,13 +70,14 @@ const StoredProfiles = (props) => {
         <div className="hero-body">
         </div>
       </section>
+      <ul>
 
       <section className="articles">
-        <div className="row is-8 is-offset-2">
+        <div className="column is-8 is-offset-2">
           <div className="container has-text-centered">
             <div className="card article">
               <div className="card-content">
-                <div className="row is-10">
+                <div className="row is-10 is-offset-10">
                   <h3 className="title has-text-black">Profiles</h3>
                 
                   <div className="card article">
@@ -84,16 +85,16 @@ const StoredProfiles = (props) => {
                     <div className="media">
                       <div className="media-content has-text-centered"></div>
                         <AddUser loadProfiles={loadProfiles}/>
-                         <h1>StoredProfiles</h1>
+                         <p className="title article-title">StoredProfiles</p>
                          <button onClick={handleClick}>Show all profiles saved in db</button>
 
                         {showProfiles && profiles.map(profile => {
                           return (
                             <div key={profile.id}> 
                            <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input><Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3>
-                           <ul >
+                           {/* <ul > */}
                             <li>{profile.profileLink}</li>
-                           </ul> 
+                           {/* </ul>  */}
                           </div>
                          )
                         })}
@@ -117,6 +118,7 @@ const StoredProfiles = (props) => {
       
     
       </section>
+    </ul>
       </>
     )
   }
