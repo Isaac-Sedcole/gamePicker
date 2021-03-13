@@ -4321,4 +4321,21 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+.navbar {
+  font-size: x-large;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: #edededeb;
+  width: 100%;
+  font-family: Georgia, serif;
+}
+
+.navbar-item {
+  font-family: Georgia, serif;
+  color: black;
+}
+
 /*# sourceMappingURL=styles.css.map*/

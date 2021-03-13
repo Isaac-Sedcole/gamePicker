@@ -5,6 +5,7 @@ import {GetPlayerSummaries} from '../apis/steam'
 import StoredProfiles from './StoredProfiles'
 import AddUser from './AddUser'
 import RecommendedGames from './RecommendedGames'
+import {Link} from 'react-router-dom'
 
 
 function Home  (props)  {
@@ -53,6 +54,19 @@ function Home  (props)  {
   
   return (
     <>
+    <section className="hero is-fullheight is-default is-bold">
+      <div className="hero-body">
+        <div className="container has-text-centered">
+          <div className="columns is-vcentered">
+            <p className="has-text-centered"><Link className="button is-medium is-info is-outlined" to="/">Home</Link></p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
       {/* <h1>HomePage</h1> */}
       <div>
       {/* {showForm && (<Form />)} */}
