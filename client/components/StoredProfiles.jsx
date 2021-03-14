@@ -60,8 +60,9 @@ const StoredProfiles = (props) => {
       })
     }
     
- 
-
+    
+    
+    // let count = 0
   // console.log(profiles)
 
     return (
@@ -69,8 +70,7 @@ const StoredProfiles = (props) => {
       <section className="hero is-info is-medium-is-bold">
         <div className="hero-body">
         </div>
-      </section>
-      
+      </section> 
         <br></br>
         <br></br>
         <br></br>
@@ -88,71 +88,61 @@ const StoredProfiles = (props) => {
       <section className="articles">
         <div className="card">
           <div className="media">
-          <div className="media-content">
-                <div className="content ">
-                  <p className="title is-3 has-text-centered">Profiles</p>
-                  </div>
-                  </div>
+           <div className="media-content">
+              <div className="content ">
+                <p className="title is-3 has-text-centered">Profiles</p>
+              </div>
+            </div>
           </div>
         <div className="card">
-
           <div className="card-content">
             <div className="media">
               <div className="media-content">
                 <div className="content">
                   <AddUser loadProfiles={loadProfiles}/>
-                  </div>
-                  </div>
                 </div>
-                </div>
-                </div>
-                <br></br>
-                <br></br>
-
+              </div>
+            </div>
+          </div>
+        </div>
+        <br></br>
+        <br></br>
         <div className="card">
-
-                <div className="card-content">
+          <div className="card-content">
             <div className="media">
               <div className="media-content">
                 <div className="content ">
-                  <div className="columns is-vcentered">
-                    <div className="column is-8">
-
-
-                  
-                         <p className="title is-3">StoredProfiles</p>
-                         <button onClick={handleClick}>Show all profiles saved in db</button>
-
-                        {showProfiles && profiles.map(profile => {
-                          return (
-                            <div key={profile.id}> 
-                            
-                            <div className="column is-one-quarter">
-                           <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input><Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3>
-                           <ul >
-                            <li>{profile.profileLink}</li>
-                           </ul>
-                           </div> 
-                           
-
+                  <div className="level-item">
+                      <p className="title is-3">StoredProfiles</p>
+                  </div>
+                  <div className="level-item">
+                    <button onClick={handleClick}>Show all profiles saved in db</button>
+                  </div>
+                  <div className="level-item">
+                    <div className="columns is-multiline is-centered">
+                      {showProfiles && profiles.map(profile => {
+                        return (
+                          <div className="column is-one-quarter" key={profile.id}> 
+                            <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input><Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3>
+                            <ul>
+                              <li>{profile.profileLink}</li>
+                            </ul>
                           </div>
-                         )
-                        })}
-                        <br></br>
-                        <br></br>
-                      <Link to="/recommendedgames">Find games in common!</Link>
-                        </div>
-                        </div>
-                      </div>
+                        )
+                      })}
+                    </div>
+                    <br></br>
+                    <br></br>
+                  </div>
+                  <div className="level-item">
+                    <Link to="/recommendedgames">Find games in common!</Link>
                   </div>
                 </div>
-                </div>
-                        </div>
-                        </div>
-                        
-                        
-      
-    
+              </div>
+            </div>
+          </div>
+         </div>
+       </div>
       </section>
     
       </>
