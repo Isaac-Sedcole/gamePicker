@@ -124,6 +124,12 @@ const RecommendedGames = (props) => {
 
     return (
       <>
+
+      <br></br>
+      <br></br>
+      <br></br>
+    
+
       <h1>Recommended Games</h1>
 
       {!showLink && props.userList.map(person => {
@@ -134,39 +140,102 @@ const RecommendedGames = (props) => {
         )
       })}
       {!showLink && <div>You have: {games.length} games in common
-      <br></br>
-      <br></br>
-      {!showLink && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
-      <br></br>
-      <br></br>
-      {showSelected && <h3>{selectedGame.name}</h3>}
-      <br></br>
-      <br></br>
-      <button onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
-      <br></br>
-      <ul>
-      {showRecommended && recommendedGames.map(game => {
-        return (
-          <li key={game.appid}><img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
-          <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a></li>
-          )
-        })}
-      </ul>
-      <br></br>
-      <br></br>
-      These are the games you have in common:
-      <ul>
-        {games.map(game => {
+        <br></br>
+        <br></br>
+        {!showLink && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
+        <br></br>
+        <br></br>
+        {showSelected && <h3>{selectedGame.name}</h3>}
+        <br></br>
+        <br></br>
+        <button onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
+        <br></br>
+        
+       
+        {showRecommended && 
+        <>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <section className="articles">      
+                  <p className="title is-3 has-text-centered">These are the recommended games (all but one person owns these):</p>
+                  <div className="level-item">
+                  <div className="columns is-multiline is-centered">
+
+        {showRecommended && recommendedGames.map(game => {
           return (
-          <li key={game.appid}><img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
-          <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a></li>
-          )
-        })}
-      </ul>
+            <div className="column is-2 is-narrow" key={game.appid}>
+              <div className="card">
+                <div className="card-content">
+                  <div className="media">
+                    <div className="media-content">
+                      <div className="content">
+                        <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
+                        <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
+                      </div>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            )
+          })}
+          </div>
+          </div>
+              </section> 
+          </>
+          }
+
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+
+        <section className="articles">
+          <p className="title is-3 has-text-centered">These are the games you have in common:</p>
+          <div className="level-item">
+            <div className="columns is-multiline is-centered">
+              {games.map(game => {
+                return (
+                  <div className="column is-2 is-narrow" key={game.appid}>
+                    <div className="card">
+                      <div className="card-content">
+                        <div className="media">
+                          <div className="media-content">
+                            <div className="content">
+                              <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
+                              <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
+                            </div>
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>             
       </div>
+      
+      
 }
-
-
       {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add people</p> }
     
     {redirect && <Redirect to="/profiles" />}

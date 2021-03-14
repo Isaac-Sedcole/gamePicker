@@ -18,7 +18,7 @@ const AddUser = (props) => {
 
 
       <h2>Add a user to the db</h2>
-      <button onClick={handleClick}>Show Form</button>
+      <button className="button is-medium is-info is-outlined" onClick={handleClick}>Show Form</button>
       {showForm && (<Form loadProfiles={props.loadProfiles()}/>)}
           </div>
         </div>

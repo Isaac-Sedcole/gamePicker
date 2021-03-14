@@ -67,7 +67,7 @@ function Home  (props)  {
             <div className="row is-6">
 
             <h2>external api stuff</h2>
-            <button onClick={displayProfile}>Show Profile</button>
+            <button className="button is-medium is-info is-outlined" onClick={displayProfile}>Show Profile</button>
             {profileVisible && displayInfo()}
             </div>
 

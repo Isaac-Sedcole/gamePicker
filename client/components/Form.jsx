@@ -81,9 +81,9 @@ const Form = (props) => {
           <br></br>
           </>
 ))}
-          <button onClick={onAddClick}>Add forms</button>
+          <button className="button is-medium is-info is-outlined" onClick={onAddClick}>Add forms</button>
           <br></br>
-        <button>Send</button>
+        <button className="button is-medium is-info is-outlined">Send</button>
         </form>
     </>
   )
