@@ -81,11 +81,11 @@ function Home  (props)  {
             </div>
             <br></br>
             <br></br> */}
-            <div className="row is-4">
+            {/* <div className="row is-4">
 
             <h2>combined api stuff</h2>
             <RecommendedGames />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
