@@ -145,7 +145,7 @@ const RecommendedGames = (props) => {
         {!showLink && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
         <br></br>
         <br></br>
-        {showSelected && <h3>{selectedGame.name}</h3>}
+        {showSelected && <h3><a href={"https://store.steampowered.com/app/"+selectedGame.appid+"/"+parsedName(selectedGame.name)+"/"}>{selectedGame.name}</a></h3>}
         <br></br>
         <br></br>
         <button onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
