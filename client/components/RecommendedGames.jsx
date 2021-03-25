@@ -123,7 +123,7 @@ const RecommendedGames = (props) => {
   }
 
     return (
-      <>
+      <div className="mx-3">
 
       <br></br>
       <br></br>
@@ -239,7 +239,7 @@ const RecommendedGames = (props) => {
       {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add people</p> }
     
     {redirect && <Redirect to="/profiles" />}
-      </>
+      </div>
     )
   }
 

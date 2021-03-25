@@ -10,20 +10,21 @@ const AddUser = (props) => {
       setShowForm(!showForm)
     }
     return (
-      <>
-      <div className="article">
-        <div className="media">
+      
           <div className="media-content has-text-centered">
+      {/* <> */}
+      {/* <div className="article"> */}
+        {/* <div className="media"> */}
 
 
 
       <h2>Add a user to the db</h2>
       <button className="button is-medium is-info is-outlined" onClick={handleClick}>Show Form</button>
       {showForm && (<Form loadProfiles={props.loadProfiles()}/>)}
+      {/* </> */}
+      {/* </div> */}
+    {/* </div> */}
           </div>
-        </div>
-      </div>
-      </>
     )
   }
   
