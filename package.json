@@ -7,7 +7,6 @@
   "author": "EDA",
   "license": "ISC",
   "scripts": {
-    "client": "webpack serve --config ./client/webpack.config.js --hot",
     "dev": "run-p dev:client dev:server",
     "dev:client": "npm run webpack -- --watch",
     "dev:server": "nodemon server",
@@ -24,7 +23,8 @@
     "h:deploy": "git push heroku main",
     "h:migrate": "heroku run npm run knex migrate:latest",
     "h:rollback": "heroku run npm run knex migrate:rollback",
-    "h:seed": "heroku run npm run knex seed:run"
+    "h:seed": "heroku run npm run knex seed:run",
+    "client": "webpack serve --config ./client/webpack.config.js --hot"
   },
   "keywords": [
     "fullstack"

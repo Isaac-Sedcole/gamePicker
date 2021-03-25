@@ -1,7 +1,7 @@
 const environments = {
     development: 'http://localhost:3000/api',
     test: 'http://localhost:3333/api',
-    production: '',
+    production: 'https://gamepickerchooser.herokuapp.com/api',
     integration: '',
     deployment: '',
     build: ''
