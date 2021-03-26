@@ -83,7 +83,7 @@ const Form = (props) => {
 ))}
           <button className="button is-medium is-info is-outlined" onClick={onAddClick}>Add forms</button>
           <br></br>
-        <button className="button is-medium is-info is-outlined">Enter</button>
+        <button className="button is-medium is-info is-outlined">Submit</button>
         </form>
     </>
   )
