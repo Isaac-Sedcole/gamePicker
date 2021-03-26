@@ -6,6 +6,7 @@ import StoredProfiles from './StoredProfiles'
 import AddUser from './AddUser'
 import RecommendedGames from './RecommendedGames'
 import {Link} from 'react-router-dom'
+import ActualStoredProfiles from './ActualStoredProfiles'
 
 
 function Home  (props)  {
@@ -73,6 +74,8 @@ function Home  (props)  {
 
             <br></br>
             <br></br> 
+
+            <ActualStoredProfiles/>
             {/* <div className="row is-3">
             <br></br>
             <br></br>
