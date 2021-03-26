@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import {getAllUsers} from '../apis/steam'
 import AddUser from './AddUser'
 import { connect } from 'react-redux'
-import { addCompareList } from '../actions/userList'
+import { addCompareList, setShowProfiles } from '../actions/userList'
 
 
-const StoredProfiles = (props) => {
+const ActualStoredProfiles = (props) => {
 
   const [compareList, setCompareList] = useState([])
-  const [showProfiles, setShowProfiles] = useState(false)
+//   const [showProfiles, setShowProfiles] = useState(false)
   const [profiles , setProfiles] = useState([{
     id:null,
     name:'',
@@ -42,7 +42,8 @@ const StoredProfiles = (props) => {
   }
   
   const handleClick = () => {
-    setShowProfiles(!showProfiles)
+    // setShowProfiles(!showProfiles)
+    props.dispatch(setShowProfiles(!props.showProfiles))
     loadProfiles()
     
     // let usersd = users.map(user => {
@@ -101,7 +102,7 @@ const StoredProfiles = (props) => {
                             <br></br>
                             <div className="level-item">
                               <div className="columns is-multiline is-centered">
-                                {showProfiles && profiles.map(profile => {
+                                {props.showProfiles && profiles.map(profile => {
                                   return (
                                     <div className="column is-one-quarter" key={profile.id}> 
                                       <div className="card">
@@ -138,5 +139,11 @@ const StoredProfiles = (props) => {
       </>
     )
   }
+
+  const mapStateToProps = (globalState) => {
+    return {
+      showProfiles: globalState.showProfiles
+    }
+  }
   
-  export default connect()(StoredProfiles)
+  export default connect(mapStateToProps)(ActualStoredProfiles)
