@@ -7,6 +7,7 @@ const RecommendedGames = (props) => {
   
   const [showLink, setShowLink] = useState(true)
   const [redirect, setRedirect] = useState(false)
+  const [homeRedirect, setHomeRedirect] = useState(false)
   const [games, setGames] = useState([])
   const [selectedGame, setSelectedGame] = useState(null)
   const [showSelected, setShowSelected] = useState(false)
@@ -79,6 +80,10 @@ const RecommendedGames = (props) => {
   
   const handleRedirect = () => {
     setRedirect(true)
+  }
+
+  const handleRedirectHome = () => {
+    setHomeRedirect(true)
   }
 
   const parsedName = (name) => {
@@ -236,9 +241,11 @@ const RecommendedGames = (props) => {
       
       
 }
-      {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add people</p> }
-    
+      {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add profiles</p> }
+      {showLink && <p> Or go <button onClick={handleRedirectHome}>Here!</button> to select profiles</p> }
+
     {redirect && <Redirect to="/profiles" />}
+    {homeRedirect && <Redirect to="/" />}
       </div>
     )
   }

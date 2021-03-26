@@ -9,6 +9,8 @@ import { addCompareList, setShowProfiles } from '../actions/userList'
 const ActualStoredProfiles = (props) => {
 
   const [compareList, setCompareList] = useState([])
+  const [minProfiles, setMinProfiles] = useState(false)
+//   const [compareListHasBeenUpdated, setCompareListHasBeenUpdated] = useState(false)
 //   const [showProfiles, setShowProfiles] = useState(false)
   const [profiles , setProfiles] = useState([{
     id:null,
@@ -22,7 +24,26 @@ const ActualStoredProfiles = (props) => {
   
   useEffect(() => {
     props.dispatch(addCompareList(compareList))
+    // setCompareListHasBeenUpdated(true)
+    if(props.userList.length > 0) {
+        setMinProfiles(true)
+    } else if(props.userList.length < 2) {
+        setMinProfiles(false)
+    }
   },[compareList])
+
+//   const updateFindCommonGamesButton = () => {
+//       if(compareListHasBeenUpdated) {
+//         if(props.userList.length > 0) {
+//             setMinProfiles(true)
+//         } else if(props.userList.length < 1) {
+//             setMinProfiles(false)
+//         }
+//         setCompareListHasBeenUpdated(false)
+//       }
+    
+//   }
+
 
   
   
@@ -129,9 +150,16 @@ const ActualStoredProfiles = (props) => {
                               <br></br>
                               <br></br>
                             </div>
-                            <div className="level-item">
-                              <Link to="/recommendedgames">Find games in common!</Link>
-                            </div>
+                            {minProfiles && 
+                                <div className="level-item">
+                                    <Link className="button is-medium is-info is-outlined " to="/recommendedgames">Find games in common!</Link>
+                                </div>
+                            }
+                            {!minProfiles && 
+                                <div className="level-item">
+                                <Link className="button is-medium is-info is-outlined " disabled to="#">Find games in common!</Link>
+                              </div>
+                            }
                           </div>
                         </div>
                       </div>
@@ -145,7 +173,8 @@ const ActualStoredProfiles = (props) => {
 
   const mapStateToProps = (globalState) => {
     return {
-      showProfiles: globalState.showProfiles
+      showProfiles: globalState.showProfiles,
+      userList: globalState.userList
     }
   }
   
