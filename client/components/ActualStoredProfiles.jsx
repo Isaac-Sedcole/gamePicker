@@ -1,15 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
-import {getAllUsers} from '../apis/steam'
+import { Link, Route } from 'react-router-dom'
+import {getAllUsers, GetSteamIdByUsername, GetOwnedGames} from '../apis/steam'
 import AddUser from './AddUser'
 import { connect } from 'react-redux'
 import { addCompareList, setShowProfiles } from '../actions/userList'
+import AddPersonModal from './AddPersonModal'
+import { setShowModal } from '../actions/modal'
+
 
 
 const ActualStoredProfiles = (props) => {
 
   const [compareList, setCompareList] = useState([])
   const [minProfiles, setMinProfiles] = useState(false)
+//   const [showModal, setShowModal] = useState(false)
   const [profiles , setProfiles] = useState([{
     id:null,
     name:'',
@@ -56,6 +60,40 @@ const ActualStoredProfiles = (props) => {
     }
     
     const checkBoxHandler =  (user) => {
+        console.log(user)
+        //testing for checking if private games library
+        //----------------------------
+        //getting username from vanityURL in its pure form
+        if(user.profileLink.substr(27, 2) == "id") {
+            let username = user.profileLink.substr(30,user.profileLink.length-30)
+            if(username[username.length-1] == "/") {
+              username = username.substr(0,username.length-1)
+            }
+            //using the username to return the steam ID
+            GetSteamIdByUsername(username)
+            .then(steamIdObj => {
+              GetOwnedGames(steamIdObj.response.steamid)
+              .then(allOwnedGames => {
+                  //if the persons profile is private
+                  if(allOwnedGames.response.games == undefined) {
+                      props.dispatch(setShowModal(true))
+                      
+                  }
+              })
+            })
+          } else if(user.profileLink.substr(27, 8) == "profiles") {
+            let id = user.profileLink.substr(36,user.profileLink.length-36)
+               GetOwnedGames(id)
+              .then(allOwnedGames => {
+                  //if the persons profile is private
+                if(allOwnedGames.response.games === undefined) {
+                    props.dispatch(setShowModal(true))
+                }
+              })
+        }
+
+
+        //-------------------------------
       setCompareList(currentList => {
         let newArr = currentList.filter(person => {
           return user.id != person.id
@@ -112,6 +150,7 @@ const ActualStoredProfiles = (props) => {
                                               <div className="content">
                                                   <label className="checkbox">
                                                     <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input>{profile.name}</h3>
+                                                  
                                                   </label>
                                                 {/* <Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3> */}
                                                 {/* <ul>
@@ -145,6 +184,12 @@ const ActualStoredProfiles = (props) => {
                     </div>
                   </div>
       </section>
+      { props.showModal && 
+      <>
+      {/* <AddPersonModal showModal={showModal} setShowModal={setShowModal}/> */}
+      <Route path="/" component={AddPersonModal} />
+      </>
+      }
     
       </>
     )
@@ -152,7 +197,8 @@ const ActualStoredProfiles = (props) => {
 
   const mapStateToProps = (globalState) => {
     return {
-      showProfiles: globalState.showProfiles
+      showProfiles: globalState.showProfiles,
+      showModal: globalState.showModal
     }
   }
   
