@@ -32,7 +32,7 @@ const Nav = (props) => {
           <div className="navbar-end">
           <Link onClick={toggleBurger} className="navbar-item" to={`/`}>Home</Link>
           
-          <Link onClick={toggleBurger} className="navbar-item" to={`/profiles`}>Stored Profiles</Link>
+          <Link onClick={toggleBurger} className="navbar-item" to={`/profiles`}>Add profile</Link>
 
           </div>
 

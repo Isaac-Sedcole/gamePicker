@@ -7,6 +7,7 @@ const RecommendedGames = (props) => {
   
   const [showLink, setShowLink] = useState(true)
   const [redirect, setRedirect] = useState(false)
+  const [homeRedirect, setHomeRedirect] = useState(false)
   const [games, setGames] = useState([])
   const [selectedGame, setSelectedGame] = useState(null)
   const [showSelected, setShowSelected] = useState(false)
@@ -69,7 +70,19 @@ const RecommendedGames = (props) => {
 
       const filteredGames = Object.values(reducedGames).filter(game => game.count == props.userList.length)
       const filteredRecommendedGames = Object.values(reducedGames).filter(game => game.count == (props.userList.length -1))
-      
+  
+      filteredGames.sort((a,b) => {
+        let textA = a.name.toUpperCase()
+        let textB = b.name.toUpperCase()
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+      })
+
+      filteredRecommendedGames.sort((a,b) => {
+        let textA = a.name.toUpperCase()
+        let textB = b.name.toUpperCase()
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+      })
+
       // console.log(filteredGames.length)
       // console.log(filteredGames)
       setGames(filteredGames)
@@ -79,6 +92,10 @@ const RecommendedGames = (props) => {
   
   const handleRedirect = () => {
     setRedirect(true)
+  }
+
+  const handleRedirectHome = () => {
+    setHomeRedirect(true)
   }
 
   const parsedName = (name) => {
@@ -180,7 +197,7 @@ const RecommendedGames = (props) => {
                     <div className="media-content">
                       <div className="content">
                         <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
-                        <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
+                        <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
                       </div>
                     </div>
                   </div> 
@@ -220,7 +237,7 @@ const RecommendedGames = (props) => {
                           <div className="media-content">
                             <div className="content">
                               <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
-                              <a href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
+                              <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
                             </div>
                           </div>
                         </div> 
@@ -236,9 +253,11 @@ const RecommendedGames = (props) => {
       
       
 }
-      {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add people</p> }
-    
+      {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add profiles</p> }
+      {showLink && <p> Or go <button onClick={handleRedirectHome}>Here!</button> to select profiles</p> }
+
     {redirect && <Redirect to="/profiles" />}
+    {homeRedirect && <Redirect to="/" />}
       </div>
     )
   }

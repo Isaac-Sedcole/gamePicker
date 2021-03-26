@@ -6,6 +6,7 @@ import StoredProfiles from './StoredProfiles'
 import AddUser from './AddUser'
 import RecommendedGames from './RecommendedGames'
 import {Link} from 'react-router-dom'
+import ActualStoredProfiles from './ActualStoredProfiles'
 
 
 function Home  (props)  {
@@ -60,7 +61,7 @@ function Home  (props)  {
           <div className="row is-vcentered">
             <div className="row is-5">
             <p className="has-text-centered">*disclaimer - this will only work if your steam profile is not on private </p>
-            <p className="has-text-centered"><Link className="button is-medium is-info is-outlined" to="/">Home</Link></p>
+            {/* <p className="has-text-centered"><Link className="button is-medium is-info is-outlined" to="/">Home</Link></p> */}
             </div>
             <br></br>
             <br></br>
@@ -73,6 +74,8 @@ function Home  (props)  {
 
             <br></br>
             <br></br> 
+
+            <ActualStoredProfiles/>
             {/* <div className="row is-3">
             <br></br>
             <br></br>

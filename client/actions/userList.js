@@ -2,6 +2,7 @@ import {getAllUsers} from '../apis/steam'
 
 export const SET_USERS = 'SET_USERS'
 export const ADD_COMPARE_LIST = 'ADD_COMPARE_LIST' 
+export const SHOW_USERS = "SHOW_USERS"
 
 export function setUsers(users) {
   return {
@@ -24,5 +25,12 @@ export function addCompareList(compareList) {
   return {
     type: ADD_COMPARE_LIST,
     compareList
+  }
+}
+
+export function setShowProfiles(bool) {
+  return {
+    type: SHOW_USERS,
+    bool
   }
 }
