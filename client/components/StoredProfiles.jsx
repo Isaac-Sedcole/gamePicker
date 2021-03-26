@@ -86,17 +86,17 @@ const StoredProfiles = (props) => {
         <br></br>
         <br></br>
       <section className="articles">
-        <div className="card">
+        {/* <div className="card">
           <div className="card-content">
             <div className="media">
               <div className="media-content">
-                <div className="content ">
-                  <p className="title is-3 has-text-centered">Add a profile</p>
+                <div className="content "> */}
                   <div className="card">
                     <div className="card-content">
                       <div className="media">
                         <div className="media-content">
                           <div className="content">
+                            <p className="title is-3 has-text-centered">Add a profile</p>
                             <br></br>
                             <br></br>
                             <AddUser loadProfiles={loadProfiles}/>
@@ -107,11 +107,11 @@ const StoredProfiles = (props) => {
                   </div>
                   <br></br>
                   <br></br>
-                </div>
+                {/* </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
     
       </>
