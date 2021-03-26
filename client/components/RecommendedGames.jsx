@@ -70,7 +70,19 @@ const RecommendedGames = (props) => {
 
       const filteredGames = Object.values(reducedGames).filter(game => game.count == props.userList.length)
       const filteredRecommendedGames = Object.values(reducedGames).filter(game => game.count == (props.userList.length -1))
-      
+  
+      filteredGames.sort((a,b) => {
+        let textA = a.name.toUpperCase()
+        let textB = b.name.toUpperCase()
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+      })
+
+      filteredRecommendedGames.sort((a,b) => {
+        let textA = a.name.toUpperCase()
+        let textB = b.name.toUpperCase()
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
+      })
+
       // console.log(filteredGames.length)
       // console.log(filteredGames)
       setGames(filteredGames)

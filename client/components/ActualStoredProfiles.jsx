@@ -60,7 +60,6 @@ const ActualStoredProfiles = (props) => {
     }
     
     const checkBoxHandler =  (user) => {
-        console.log(user)
         //testing for checking if private games library
         //----------------------------
         //getting username from vanityURL in its pure form
