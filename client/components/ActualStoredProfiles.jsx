@@ -10,8 +10,6 @@ const ActualStoredProfiles = (props) => {
 
   const [compareList, setCompareList] = useState([])
   const [minProfiles, setMinProfiles] = useState(false)
-//   const [compareListHasBeenUpdated, setCompareListHasBeenUpdated] = useState(false)
-//   const [showProfiles, setShowProfiles] = useState(false)
   const [profiles , setProfiles] = useState([{
     id:null,
     name:'',
@@ -24,25 +22,15 @@ const ActualStoredProfiles = (props) => {
   
   useEffect(() => {
     props.dispatch(addCompareList(compareList))
-    // setCompareListHasBeenUpdated(true)
-    if(props.userList.length > 0) {
+
+    if(compareList.length > 1) {
         setMinProfiles(true)
-    } else if(props.userList.length < 2) {
+    } else if(compareList.length < 2) {
         setMinProfiles(false)
     }
   },[compareList])
 
-//   const updateFindCommonGamesButton = () => {
-//       if(compareListHasBeenUpdated) {
-//         if(props.userList.length > 0) {
-//             setMinProfiles(true)
-//         } else if(props.userList.length < 1) {
-//             setMinProfiles(false)
-//         }
-//         setCompareListHasBeenUpdated(false)
-//       }
-    
-//   }
+
 
 
   
@@ -63,12 +51,8 @@ const ActualStoredProfiles = (props) => {
   }
   
   const handleClick = () => {
-    // setShowProfiles(!showProfiles)
     props.dispatch(setShowProfiles(!props.showProfiles))
     loadProfiles()
-    
-    // let usersd = users.map(user => {
-      //   return userStoredProfiles
     }
     
     const checkBoxHandler =  (user) => {
@@ -84,15 +68,10 @@ const ActualStoredProfiles = (props) => {
     
     
     
-    // let count = 0
-  // console.log(profiles)
+  
 
     return (
       <>
-      {/* <section className="hero is-info is-medium-is-bold">
-        <div className="hero-body">
-        </div>
-      </section>  */}
         <br></br>
         <br></br>
         <br></br>
@@ -173,8 +152,7 @@ const ActualStoredProfiles = (props) => {
 
   const mapStateToProps = (globalState) => {
     return {
-      showProfiles: globalState.showProfiles,
-      userList: globalState.userList
+      showProfiles: globalState.showProfiles
     }
   }
   
