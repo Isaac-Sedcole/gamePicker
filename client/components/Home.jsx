@@ -65,12 +65,16 @@ function Home  (props)  {
             </div>
             <br></br>
             <br></br>
+            {false && 
+            
             <div className="row is-6">
 
             <h2>external api stuff</h2>
             <button className="button is-medium is-info is-outlined" onClick={displayProfile}>Show Profile</button>
+            
             {profileVisible && displayInfo()}
             </div>
+            }
 
             <br></br>
             <br></br> 

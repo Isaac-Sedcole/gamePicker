@@ -63,7 +63,9 @@ const ActualStoredProfiles = (props) => {
         //testing for checking if private games library
         //----------------------------
         //getting username from vanityURL in its pure form
-        if(user.profileLink.substr(27, 2) == "id") {
+        //if user already exists in currentList
+        if(compareList.filter(e => e.name == user.name).length < 1){
+          if(user.profileLink.substr(27, 2) == "id") {
             let username = user.profileLink.substr(30,user.profileLink.length-30)
             if(username[username.length-1] == "/") {
               username = username.substr(0,username.length-1)
@@ -73,24 +75,25 @@ const ActualStoredProfiles = (props) => {
             .then(steamIdObj => {
               GetOwnedGames(steamIdObj.response.steamid)
               .then(allOwnedGames => {
-                  //if the persons profile is private
-                  if(allOwnedGames.response.games == undefined) {
-                      props.dispatch(setShowModal(true))
-                      
-                  }
+                //if the persons profile is private
+                if(allOwnedGames.response.games == undefined) {
+                  props.dispatch(setShowModal(true))
+                  
+                }
               })
             })
           } else if(user.profileLink.substr(27, 8) == "profiles") {
             let id = user.profileLink.substr(36,user.profileLink.length-36)
-               GetOwnedGames(id)
-              .then(allOwnedGames => {
-                  //if the persons profile is private
-                if(allOwnedGames.response.games === undefined) {
-                    props.dispatch(setShowModal(true))
-                }
-              })
+            GetOwnedGames(id)
+            .then(allOwnedGames => {
+              //if the persons profile is private
+              if(allOwnedGames.response.games === undefined) {
+                props.dispatch(setShowModal(true))
+              }
+            })
+          }
         }
-
+          
 
         //-------------------------------
       setCompareList(currentList => {
@@ -133,7 +136,7 @@ const ActualStoredProfiles = (props) => {
                                 <p className="title is-3">StoredProfiles</p>
                             </div>
                             <div className="level-item">
-                              <button onClick={handleClick}>Show all profiles saved in db</button>
+                              <button className="button is-medium is-info is-outlined" onClick={handleClick}>Show all profiles </button>
                             </div>
                             <br></br>
                             <br></br>
