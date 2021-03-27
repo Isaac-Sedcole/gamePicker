@@ -6,6 +6,7 @@ import { GetOwnedGames, GetPlayerSummaries, GetSteamIdByUsername } from '../apis
 const RecommendedGames = (props) => {
   
   const [showLink, setShowLink] = useState(true)
+  const [overThreeInList, setOverThreeInList] = useState(false)
   const [redirect, setRedirect] = useState(false)
   const [homeRedirect, setHomeRedirect] = useState(false)
   const [games, setGames] = useState([])
@@ -16,12 +17,16 @@ const RecommendedGames = (props) => {
 
 
   useEffect(() => {
+    setOverThreeInList(false)
     if(props.userList.length == 0) {
       setShowLink(true)
     } else {
       setShowLink(false)
     }
     fetchGames()
+    if(props.userList.length > 2) {
+      setOverThreeInList(true)
+    }
   }, [])
 
   const fetchGames = () => {
@@ -165,7 +170,9 @@ const RecommendedGames = (props) => {
         {showSelected && <h3><a href={"https://store.steampowered.com/app/"+selectedGame.appid+"/"+parsedName(selectedGame.name)+"/"}>{selectedGame.name}</a></h3>}
         <br></br>
         <br></br>
+        {overThreeInList && 
         <button onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
+        }
         <br></br>
         
        
