@@ -73,8 +73,18 @@ const RecommendedGames = (props) => {
         return games
       }, {})
 
-      const filteredGames = Object.values(reducedGames).filter(game => game.count == props.userList.length)
-      const filteredRecommendedGames = Object.values(reducedGames).filter(game => game.count == (props.userList.length -1))
+      const filteredGames = Object.values(reducedGames).filter(game => {
+        if(game.count == props.userList.length && !(game.img_icon_url == "" || game.img_logo_url == "")){
+          return game
+        }
+      })
+
+      const filteredRecommendedGames = Object.values(reducedGames).filter(game => {
+        if(game.count == (props.userList.length -1) && !(game.img_icon_url == "" || game.img_logo_url == "")){
+          return game
+        }
+      })
+        
   
       filteredGames.sort((a,b) => {
         let textA = a.name.toUpperCase()
@@ -92,8 +102,17 @@ const RecommendedGames = (props) => {
       // console.log(filteredGames)
       setGames(filteredGames)
       setRecommendedGames(filteredRecommendedGames)
+      // console.log(filteredGames)
+      // let newArrr = filteredGames.filter(game => {
+      //   if(!(game.img_icon_url == "" || game.img_logo_url == "")) {
+      //     return game
+      //   }
+      // })
+      // console.log(newArrr)
+      // console.log(newArrr.length)
     })
-    } 
+  }
+    
   
   const handleRedirect = () => {
     setRedirect(true)
