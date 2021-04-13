@@ -60,7 +60,7 @@ function Home  (props)  {
         <div className="container has-text-centered">
           <div className="row is-vcentered">
             <div className="row is-5">
-            <p className="has-text-centered">*disclaimer - this will only work if your steam profile is not on private </p>
+            <p className="has-text-centered is-size-2 has-text-weight-bold">*disclaimer - this will only work if your steam profile is not on private </p>
             {/* <p className="has-text-centered"><Link className="button is-medium is-info is-outlined" to="/">Home</Link></p> */}
             </div>
             <br></br>

@@ -151,7 +151,7 @@ const ActualStoredProfiles = (props) => {
                                             <div className="media-content">
                                               <div className="content">
                                                   <label className="checkbox">
-                                                    <h3><input type="checkbox" onClick={() => checkBoxHandler(profile)}></input>{profile.name}</h3>
+                                                  <p className="p-6 is-size-3 has-text-weight-semibold"><input className="p-6 m-6" type="checkbox" onClick={() => checkBoxHandler(profile)}></input>{profile.name}</p>
                                                   
                                                   </label>
                                                 {/* <Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3> */}
