@@ -41,9 +41,29 @@ const Form = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    //check for it to be a valid steam user
+    //whenever a user is attempted to be added, check if they already exist
+    const baseLink = formData.profileLink.substr(0, 27)
+    console.log(baseLink)
+    if((formData.profileLink.substr(0, 27) == "https://steamcommunity.com/") && ((formData.profileLink.substr(27,2) == "id") || (formData.profileLink.substr(27, 8) == "profiles")))  {
+      console.log("we made it into the if after submitting")
+      addSteamUser(formData)
+    } else {
+      console.log("made it into else")
+      //show modal saying not a valid steam profile link
+    }
+
+
     // console.log(formData)
-    addSteamUser(formData)
+
+    /** 
+     * 
+     addSteamUser(formData)
+     */
+
     // props.loadProfiles()
+    console.log("resetting form")
     setForm([
       {
         name:"",
