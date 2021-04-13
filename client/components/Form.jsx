@@ -1,6 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Route } from 'react-router-dom'
 import { addSteamUser } from '../apis/steam'
-
+import { connect } from 'react-redux'
+import { fetchUsersAll } from '../actions/allUsers'
+import { setShowInvalidModal, setShowPersonModal } from '../actions/modal'
+import InvalidSteamProfileModal from "./InvalidSteamProfileModal"
+import PersonAlreadyAddedModal from "./PersonAlreadyAddedModal"
 
 
 
@@ -17,6 +22,10 @@ const Form = (props) => {
       profileLink:""
     }
   ])
+
+  useEffect(()=> {
+    props.dispatch(fetchUsersAll())
+  },[])
 
   const handleChange = (event) => {
 
@@ -41,16 +50,21 @@ const Form = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-
+    let peeps = props.allUsers
     //check for it to be a valid steam user
     //whenever a user is attempted to be added, check if they already exist
     const baseLink = formData.profileLink.substr(0, 27)
-    console.log(baseLink)
-    if((formData.profileLink.substr(0, 27) == "https://steamcommunity.com/") && ((formData.profileLink.substr(27,2) == "id") || (formData.profileLink.substr(27, 8) == "profiles")))  {
-      console.log("we made it into the if after submitting")
-      addSteamUser(formData)
+    // console.log(baseLink)
+    if((baseLink == "https://steamcommunity.com/") && ((formData.profileLink.substr(27,2) == "id") || (formData.profileLink.substr(27, 8) == "profiles")))  {
+      if(peeps.filter((person) => person.profileLink == formData.profileLink).length == 0) {
+        addSteamUser(formData)
+      } else {
+        console.log("this person has already been added") 
+        props.dispatch(setShowPersonModal(true))
+      }
     } else {
-      console.log("made it into else")
+      console.log("that is not a valid steam profile link")
+      props.dispatch(setShowInvalidModal(true))
       //show modal saying not a valid steam profile link
     }
 
@@ -105,8 +119,20 @@ const Form = (props) => {
           <br></br>
         <button className="button is-medium is-info is-outlined">Submit</button>
         </form>
+
+        {props.showInvalidModal && <Route path="/" component={InvalidSteamProfileModal} />}
+        {props.showPersonModal && <Route path="/" component={PersonAlreadyAddedModal} />}
+
     </>
   )
 }
 
-export default Form
+const mapStateToProps = (globalState) => {
+  return {
+    allUsers: globalState.allUsers,
+    showPersonModal: globalState.showPersonModal,
+    showInvalidModal: globalState.showInvalidModal
+  }
+}
+
+export default connect(mapStateToProps)(Form)
