@@ -6,6 +6,7 @@ import { GetOwnedGames, GetPlayerSummaries, GetSteamIdByUsername } from '../apis
 const RecommendedGames = (props) => {
   
   const [showLink, setShowLink] = useState(true)
+  const [overThreeInList, setOverThreeInList] = useState(false)
   const [redirect, setRedirect] = useState(false)
   const [homeRedirect, setHomeRedirect] = useState(false)
   const [games, setGames] = useState([])
@@ -16,12 +17,16 @@ const RecommendedGames = (props) => {
 
 
   useEffect(() => {
+    setOverThreeInList(false)
     if(props.userList.length == 0) {
       setShowLink(true)
     } else {
       setShowLink(false)
     }
     fetchGames()
+    if(props.userList.length > 2) {
+      setOverThreeInList(true)
+    }
   }, [])
 
   const fetchGames = () => {
@@ -68,8 +73,18 @@ const RecommendedGames = (props) => {
         return games
       }, {})
 
-      const filteredGames = Object.values(reducedGames).filter(game => game.count == props.userList.length)
-      const filteredRecommendedGames = Object.values(reducedGames).filter(game => game.count == (props.userList.length -1))
+      const filteredGames = Object.values(reducedGames).filter(game => {
+        if(game.count == props.userList.length && !(game.img_icon_url == "" || game.img_logo_url == "")){
+          return game
+        }
+      })
+
+      const filteredRecommendedGames = Object.values(reducedGames).filter(game => {
+        if(game.count == (props.userList.length -1) && !(game.img_icon_url == "" || game.img_logo_url == "")){
+          return game
+        }
+      })
+        
   
       filteredGames.sort((a,b) => {
         let textA = a.name.toUpperCase()
@@ -87,8 +102,17 @@ const RecommendedGames = (props) => {
       // console.log(filteredGames)
       setGames(filteredGames)
       setRecommendedGames(filteredRecommendedGames)
+      // console.log(filteredGames)
+      // let newArrr = filteredGames.filter(game => {
+      //   if(!(game.img_icon_url == "" || game.img_logo_url == "")) {
+      //     return game
+      //   }
+      // })
+      // console.log(newArrr)
+      // console.log(newArrr.length)
     })
-    } 
+  }
+    
   
   const handleRedirect = () => {
     setRedirect(true)
@@ -162,10 +186,12 @@ const RecommendedGames = (props) => {
         {!showLink && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
         <br></br>
         <br></br>
-        {showSelected && <h3><a href={"https://store.steampowered.com/app/"+selectedGame.appid+"/"+parsedName(selectedGame.name)+"/"}>{selectedGame.name}</a></h3>}
+        {showSelected && <h3><a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+selectedGame.appid+"/"+parsedName(selectedGame.name)+"/"}>{selectedGame.name}</a></h3>}
         <br></br>
         <br></br>
+        {overThreeInList && 
         <button onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
+        }
         <br></br>
         
        

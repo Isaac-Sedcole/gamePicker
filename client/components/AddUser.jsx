@@ -1,8 +1,14 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Form from './Form'
+import {fetchUsersAll} from '../actions/allUsers'
+import { connect } from 'react-redux'
 
 const AddUser = (props) => {
     const [showForm, setShowForm] = useState(false)
+
+    // useEffect(()=> {
+    //   props.dispatch(fetchUsersAll())
+    // },[])
 
 
 
@@ -28,4 +34,4 @@ const AddUser = (props) => {
     )
   }
   
-  export default AddUser
+  export default connect()(AddUser)
