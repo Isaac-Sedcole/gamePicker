@@ -6,7 +6,7 @@ function getUsers (db = connection) {
 
 function addUser(user, db = connection) {
   return db('users')
-  .insert(user, "id")
+  .insert(user)
 }
 
 function getUser(name, db=connection) {
