@@ -16,8 +16,18 @@ function getUser(name, db=connection) {
   .select()
 }
 
+function deleteUser(id, db = connection) {
+  return db('users')
+  .delete()
+  .where("id", id)
+  .then(rowCount => {
+    return rowCount
+  })
+}
+
 module.exports = {
   getUsers,
   addUser,
-  getUser
+  getUser,
+  deleteUser
 }
