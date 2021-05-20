@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
 const steam = require("./apis")
-const { addUser, getUsers, getUser } = require('./db/db')
-const { deleteUser } = require('../client/apis/users')
+const { addUser, getUsers, getUser, deleteUser } = require('./db/db')
+
 
 const server = express()
 

@@ -18,6 +18,7 @@ function getUser(name, db=connection) {
 
 function deleteUser(id, db = connection) {
   return db('users')
+  .select()
   .delete()
   .where("id", id)
   .then(rowCount => {
