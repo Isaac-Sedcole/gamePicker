@@ -11,21 +11,51 @@ const Games = (props) => {
   const [selectedGame, setSelectedGame] = useState(null)
   const [showSelected, setShowSelected] = useState(false)
 
+  const [profiles , setProfiles] = useState([{
+    id:null,
+    name:'',
+    profileLink:''
+  }])
+  const [showGame, setShowGame] = useState(false)
 
   useEffect(() => {
-    fetchGames()
+    loadProfiles()
   }, [])
+
+  // useEffect(()=> {
+  //   // console.log('temp useEffect')
+  //   // console.log(profiles)
+  //   fetchGames()
+  // },[profiles])
+
+  
+
+  const loadProfiles = () => {
+    getAllUsers()
+    .then(users => {
+      setProfiles(state => {
+        const userProfiles = []
+        users.map(user => {
+          userProfiles.push(user)
+          return user
+        })
+        state = userProfiles
+        return state
+      })
+    })
+  }
+
+  const loadGames = () => {
+    console.log(profiles)
+    fetchGames()
+    setShowGame(true)
+  }
 
   const fetchGames = () => {
 
-    getAllUsers()
-    .then(result => {
-      return console.log(result)
-    })
-
     //if profileLink == user.profileLink then we have the right person and need their steamid
     //map through props.userlist and for each user call getOwnedGames
-    Promise.all(props.userList.map(user => {
+    Promise.all(profiles.map(user => {
       //check if id or profile in profileLink
       //this is the specific part of string where it will say either id or profile
       if(user.profileLink.substr(27, 2) == "id") {
@@ -49,12 +79,12 @@ const Games = (props) => {
       }else {
         return Promise.resolve()
       }
-    })) //promise.all means the entire thing will wait before running then - make sure to return all
-    //async related things
+    })) 
     .then((totalGames) => {
-
+      // setGames(totalGames)
+      // return console.log(totalGames)
+      console.log("this one",totalGames)
       const games = totalGames.flat()
-
       const reducedGames = games.reduce((games, game) => {
         
         if(!games[game.appid])  {
@@ -67,7 +97,7 @@ const Games = (props) => {
       }, {})
 
       const filteredGames = Object.values(reducedGames).filter(game => {
-        if(game.count == props.userList.length && !(game.img_icon_url == "" || game.img_logo_url == "")){
+        if(!(game.img_icon_url == "" || game.img_logo_url == "")){
           return game
         }
       })
@@ -79,9 +109,10 @@ const Games = (props) => {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
       })
 
+      setGames(filteredGames)
+
       // console.log(filteredGames.length)
       // console.log(filteredGames)
-      setGames(filteredGames)
       // console.log(filteredGames)
       // let newArrr = filteredGames.filter(game => {
       //   if(!(game.img_icon_url == "" || game.img_logo_url == "")) {
@@ -152,11 +183,12 @@ const Games = (props) => {
       
         <br></br>
         <br></br>
-        <button onClick={handleRandomGameSelector}>Choose a random game for me</button>
+        { showGame && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
         <br></br>
         <br></br>
         {showSelected && <h3><a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+selectedGame.appid+"/"+parsedName(selectedGame.name)+"/"}>{selectedGame.name}</a></h3>}
         <br></br>
+        <button onClick={loadGames}>Load games</button>
         <br></br>
         <br></br>
         <br></br>
@@ -171,6 +203,7 @@ const Games = (props) => {
         <br></br>
         <br></br>
 
+        { showGame &&
         <section className="articles">
           <p className="title is-3 has-text-centered">These are the games everyone owns</p>
           <div className="level-item">
@@ -195,7 +228,8 @@ const Games = (props) => {
               })}
             </div>
           </div>
-        </section>             
+        </section>     
+        }        
         {/* {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add profiles</p> } */}
         {/* {showLink && <p> Or go <button onClick={handleRedirectHome}>Here!</button> to select profiles</p> } */}
   

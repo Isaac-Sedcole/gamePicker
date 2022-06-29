@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const steam = require("./apis")
-const { addUser, getUsers, getUser, deleteUser } = require('./db/db')
+const { addUser, getUsers, getUser, deleteUser, editUser } = require('./db/db')
 
 
 const server = express()
@@ -67,6 +67,19 @@ server.get('/api/steam/:name', (req, res)=> {
   })
 })
 
+server.patch('/api/users/edit/:id', (req, res) => {
+  const id = req.params.id
+  const profile = req.body
+  editUser(id, profile)
+  .then(results => {
+    res.sendStatus(200)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({message: "update profile broken."})
+  })
+})
+
 server.delete('/api/users/delete/:id', (req, res) => {
   deleteUser(req.params.id)
     .then(results => {
@@ -74,5 +87,6 @@ server.delete('/api/users/delete/:id', (req, res) => {
       return null
     })
 })
+
 
 module.exports = server

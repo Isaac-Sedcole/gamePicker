@@ -26,9 +26,17 @@ function deleteUser(id, db = connection) {
   })
 }
 
+function editUser(id, profile, db = connection) {
+  return db('users')
+  .select()
+  .where("id", id)
+  .update(profile)
+}
+
 module.exports = {
   getUsers,
   addUser,
   getUser,
-  deleteUser
+  deleteUser,
+  editUser
 }

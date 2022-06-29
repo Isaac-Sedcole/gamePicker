@@ -8,6 +8,7 @@ import Profile from './Profile'
 import RecommendedGames from './RecommendedGames'
 import DeleteUser from './DeleteUser'
 import Games from './Games'
+import EditProfileURL from './EditProfileURL'
 
 function App ()  {
   
@@ -21,6 +22,7 @@ function App ()  {
     <Route path="/recommendedgames" exact component={RecommendedGames} />
     <Route path="/delete" exact component={DeleteUser} />
     <Route path="/games" exact component={Games}/>
+    <Route path="/edit" exact component={EditProfileURL}/>
     
     {/* <Route path="/:rank" exact component={Classifications} /> */}
     
