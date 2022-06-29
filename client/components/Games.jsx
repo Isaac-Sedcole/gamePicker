@@ -83,7 +83,7 @@ const Games = (props) => {
     .then((totalGames) => {
       // setGames(totalGames)
       // return console.log(totalGames)
-      console.log("this one",totalGames)
+      // console.log("this one",totalGames)
       const games = totalGames.flat()
       const reducedGames = games.reduce((games, game) => {
         
