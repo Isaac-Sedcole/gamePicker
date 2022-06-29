@@ -7,6 +7,7 @@ import Profile from './Profile'
 // import Games from './Games'
 import RecommendedGames from './RecommendedGames'
 import DeleteUser from './DeleteUser'
+import Games from './Games'
 
 function App ()  {
   
@@ -19,6 +20,7 @@ function App ()  {
     <Route path="/profiles/:name" exact component={Profile} />
     <Route path="/recommendedgames" exact component={RecommendedGames} />
     <Route path="/delete" exact component={DeleteUser} />
+    <Route path="/games" exact component={Games}/>
     
     {/* <Route path="/:rank" exact component={Classifications} /> */}
     

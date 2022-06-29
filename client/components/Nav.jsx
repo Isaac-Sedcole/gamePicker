@@ -34,6 +34,8 @@ const Nav = (props) => {
           
           <Link onClick={toggleBurger} className="navbar-item" to={`/profiles`}>Add profile</Link>
 
+          <Link onClick={toggleBurger} className="navbar-item" to={'/games'}>Games</Link>
+
           </div>
 
           </div>
