@@ -18,11 +18,8 @@ const Games = (props) => {
   }])
   const [showGame, setShowGame] = useState(false)
   const [currentlySelectedGame, setCurrentlySelectedGame] = useState(null)
-  const [listOfPeopleWhoOwnGame, setListOfPeopleWhoOwnGame] = useState([{name: ""}])
-  const [checkboxChecked, setCheckBoxChecked] = useState({
-    ticked: false,
-    gameId: ""
-  })
+  const [listOfPeopleWhoOwnGame, setListOfPeopleWhoOwnGame] = useState([])
+  const [checkboxChecked, setCheckBoxChecked] = useState(false)
 
   useEffect(() => {
     loadProfiles()
@@ -52,8 +49,14 @@ const Games = (props) => {
     })
   }
 
+  const resetButton = () => {
+    setCheckBoxChecked(false)
+    setCurrentlySelectedGame(null)
+    setListOfPeopleWhoOwnGame([])
+  }
+
   const loadGames = () => {
-    console.log(profiles)
+    // console.log(profiles)
     fetchGames()
     setShowGame(true)
   }
@@ -179,9 +182,9 @@ const Games = (props) => {
 
   const checkBoxHandler = (specificGame) => {
     if(specificGame.appid == checkboxChecked.gameId){
-      setCheckBoxChecked({ticked: !checkboxChecked.ticked, gameId:specificGame.appid})
+      setCheckBoxChecked(!checkboxChecked)
     } else {
-      setCheckBoxChecked({ticked: true, gameId: specificGame.appId})
+      setCheckBoxChecked(true)
     }
 
     if(currentlySelectedGame == specificGame) {
@@ -202,12 +205,13 @@ const Games = (props) => {
         .then(steamIdObj => {
           GetOwnedGames(steamIdObj.response.steamid)
           .then(allOwnedGames => {
-            console.log(user.name)
+            // console.log(user.name)
             // allOwnedGames.response.games
             for(let i = 0; i< allOwnedGames.response.games.length; i++){
               if(allOwnedGames.response.games[i].appid == specificGame.appid){
                 setListOfPeopleWhoOwnGame(currentList => {
-                  return [...currentList], {name: user.name}
+                  // console.log([...currentList, {name: user.name}])
+                  return [...currentList, {name: user.name}]
                 })
               }
             }
@@ -220,7 +224,7 @@ const Games = (props) => {
             allOwnedGames.response.games.map(game => {
               if (game.appid == specificGame.appid) {
                  setListOfPeopleWhoOwnGame(currentList => {
-                  return [...currentList], {name: user.name}
+                  return [...currentList, {name: user.name}]
                 })
               }
             })
@@ -252,8 +256,10 @@ const Games = (props) => {
         {currentlySelectedGame && <> <p>All these people own </p> <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+currentlySelectedGame.appid+"/"+currentlySelectedGame.img_icon_url+".jpg"}/>
                                      <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+currentlySelectedGame.appid+"/"+parsedName(currentlySelectedGame.name)+"/"}>{currentlySelectedGame.name}</a>:
         {listOfPeopleWhoOwnGame.map(person => {
-          <p>{person.name}</p>
-        })} </>} 
+          return (<p key={person.name}>{person.name}</p>)
+        })} 
+        <button onClick={resetButton}>Reset!</button>
+        </>} 
         <br></br>
         <button onClick={loadGames}>Load games</button>
         <br></br>
@@ -283,7 +289,7 @@ const Games = (props) => {
                         <div className="media">
                           <div className="media-content">
                             <div className="content">
-                              <input className="p-6 m-6" type="radio" checked={checkboxChecked.ticked} onChange={() => checkBoxHandler(game)}></input>
+                              <input className="p-6 m-6" type="radio" checked={checkboxChecked} onChange={() => checkBoxHandler(game)}></input>
                               <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
                               <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
                             </div>
