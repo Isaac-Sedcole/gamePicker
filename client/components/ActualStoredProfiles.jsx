@@ -17,7 +17,8 @@ const ActualStoredProfiles = (props) => {
   const [profiles , setProfiles] = useState([{
     id:null,
     name:'',
-    profileLink:''
+    profileLink:'',
+    selected: false
   }])
   
   useEffect(() => {
@@ -26,7 +27,7 @@ const ActualStoredProfiles = (props) => {
   
   useEffect(() => {
     props.dispatch(addCompareList(compareList))
-
+    
     if(compareList.length > 1) {
         setMinProfiles(true)
     } else if(compareList.length < 2) {
@@ -100,15 +101,34 @@ const ActualStoredProfiles = (props) => {
         let newArr = currentList.filter(person => {
           return user.id != person.id
         })
-        return newArr.length == currentList.length 
-        ?  [...newArr, user]
-        : [...newArr]
+        if( newArr.length == currentList.length) {
+          return [...newArr, {id: user.id, name: user.name, profileLink: user.profileLink, selected: true}]
+        } else {
+          // currentList[user].selected = false
+          return [...newArr]
+        }
+        // return newArr.length == currentList.length 
+        // ?  [...newArr, user]
+        // : [...newArr]
       })
+
+      
     }
     
     
-    
-  
+    const cardClass = (profile) => {
+      if(compareList <= 0) {
+        return false
+      }
+      for(let i = 0; i < compareList.length; i++){
+        if(compareList[i].id == profile.id) {
+          return true
+        }
+      } 
+        return false
+    }
+
+
 
     return (
       <>
@@ -145,12 +165,14 @@ const ActualStoredProfiles = (props) => {
                                 {props.showProfiles && profiles.map(profile => {
                                   return (
                                     <div className="column is-one-quarter" key={profile.id}> 
-                                      <div className="card">
-                                        <div className="card-content">
+                                      {/* <div className={"card "+ (cardClass(profile) ? 'has-background-light' : 'has-card-shadow')}> */}
+                                      <div className={"card has-card-shadow "+ (cardClass(profile) ? 'has-background-info' : 'has-background-light')}>
+                                          <div className="card-content">
                                           <div className="media">
                                             <div className="media-content">
                                               <div className="content">
                                                   <label className="checkbox">
+                                                    {/* blue outline around card when selected */}
                                                   <p className="p-6 is-size-3 has-text-weight-semibold"><input className="p-6 m-6" type="checkbox" onClick={() => checkBoxHandler(profile)}></input>{profile.name}</p>
                                                   
                                                   </label>
@@ -162,7 +184,8 @@ const ActualStoredProfiles = (props) => {
                                             </div>
                                           </div>
                                         </div>
-                                      </div>
+                                        </div>
+                                      
                                     </div>
                                   )
                                 })}
