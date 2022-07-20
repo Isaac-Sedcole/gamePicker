@@ -57,7 +57,7 @@ const ActualStoredProfiles = (props) => {
   
   const handleClick = () => {
     props.dispatch(setShowProfiles(!props.showProfiles))
-    loadProfiles()
+    // loadProfiles()
     }
     
     const checkBoxHandler =  (user) => {
@@ -101,15 +101,9 @@ const ActualStoredProfiles = (props) => {
         let newArr = currentList.filter(person => {
           return user.id != person.id
         })
-        if( newArr.length == currentList.length) {
-          return [...newArr, {id: user.id, name: user.name, profileLink: user.profileLink, selected: true}]
-        } else {
-          // currentList[user].selected = false
-          return [...newArr]
-        }
-        // return newArr.length == currentList.length 
-        // ?  [...newArr, user]
-        // : [...newArr]
+        return newArr.length == currentList.length 
+        ?  [...newArr, user]
+        : [...newArr]
       })
 
       
@@ -166,16 +160,18 @@ const ActualStoredProfiles = (props) => {
                                   return (
                                     <div className="column is-one-quarter" key={profile.id}> 
                                       {/* <div className={"card "+ (cardClass(profile) ? 'has-background-light' : 'has-card-shadow')}> */}
-                                      <div className={"card has-card-shadow "+ (cardClass(profile) ? 'has-background-info' : 'has-background-light')}>
+                                      {/* <button onClick={() => checkBoxHandler(profile)}><p className="p-6 is-size-3 has-text-weight-semibold">{profile.name}</p> */}
+                                      <div className={"card has-card-shadow "+ (cardClass(profile) ? 'has-background-warning' : 'has-background-light')}>
                                           <div className="card-content">
                                           <div className="media">
                                             <div className="media-content">
                                               <div className="content">
-                                                  <label className="checkbox">
+                                                  {/* <label className="checkbox"> */}
                                                     {/* blue outline around card when selected */}
-                                                  <p className="p-6 is-size-3 has-text-weight-semibold"><input className="p-6 m-6" type="checkbox" onClick={() => checkBoxHandler(profile)}></input>{profile.name}</p>
-                                                  
-                                                  </label>
+                                                  {/* <p className="p-6 is-size-3 has-text-weight-semibold"><input className="p-6 m-6" type="checkbox" onClick={() => checkBoxHandler(profile)}></input>{profile.name}</p> */}
+                                                  {/* <button onClick={() => checkBoxHandler(profile)}>{profile.name}</button> */}
+                                                  <a onClick={() => checkBoxHandler(profile)}><p className="p-6 is-size-3 has-text-weight-semibold">{profile.name}</p></a>
+                                                  {/* </label> */}
                                                 {/* <Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3> */}
                                                 {/* <ul>
                                                   <li>{profile.profileLink}</li>
@@ -185,7 +181,7 @@ const ActualStoredProfiles = (props) => {
                                           </div>
                                         </div>
                                         </div>
-                                      
+                                      {/* </button> */}
                                     </div>
                                   )
                                 })}
