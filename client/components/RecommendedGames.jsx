@@ -14,11 +14,13 @@ const RecommendedGames = (props) => {
   const [showSelected, setShowSelected] = useState(false)
   const [recommendedGames, setRecommendedGames] = useState([])
   const [showRecommended, setShowRecommended] = useState(false)
+  const [currentUserListLocal, setCurrentUserListLocal] = useState([])
 
   //store the appid of game and the name of person who doesnt own the game OR add the person/peoples names to object that dont own the game
 
 
   useEffect(() => {
+    setCurrentUserListLocal(props.userList)
     setOverThreeInList(false)
     if(props.userList.length == 0) {
       setShowLink(true)
@@ -77,8 +79,6 @@ const RecommendedGames = (props) => {
    
       const games = totalGames.flat()
 
-      
-
       const reducedGames = games.reduce((games, game) => {
         if(!games[game.appid])  {
           games[game.appid] = { ...game, count: 1}
@@ -114,11 +114,12 @@ const RecommendedGames = (props) => {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
       })
 
-
       setGames(filteredGames)
       setRecommendedGames(filteredRecommendedGames)
     })
   }    
+
+
   
   const handleRedirect = () => {
     setRedirect(true)
@@ -167,6 +168,17 @@ const RecommendedGames = (props) => {
 
   const handleShowRecommended = () => {
     setShowRecommended(!showRecommended)
+  }
+
+  const determineWhoIsMissingTheGame = (nameArr) => {
+    let localNameArr = []
+    for(let i = 0; i<currentUserListLocal.length; i++){
+      localNameArr.push(currentUserListLocal[i].name)
+    }
+    let newestArr = localNameArr.filter(localName => {
+      return !nameArr.includes(localName)
+    })
+    return newestArr
   }
 
     return (
@@ -229,6 +241,7 @@ const RecommendedGames = (props) => {
                       <div className="content">
                         <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
                         <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
+                        <p>Not Owned By: {determineWhoIsMissingTheGame(game.gameOwnedBy)}</p>
                       </div>
                     </div>
                   </div> 
