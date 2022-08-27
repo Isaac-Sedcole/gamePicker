@@ -15,6 +15,8 @@ const RecommendedGames = (props) => {
   const [recommendedGames, setRecommendedGames] = useState([])
   const [showRecommended, setShowRecommended] = useState(false)
 
+  //store the appid of game and the name of person who doesnt own the game OR add the person/peoples names to object that dont own the game
+
 
   useEffect(() => {
     setOverThreeInList(false)
@@ -45,6 +47,14 @@ const RecommendedGames = (props) => {
           return GetOwnedGames(steamIdObj.response.steamid)
           .then(allOwnedGames => {
             return allOwnedGames.response.games
+
+            //PART OF GETTING GAME OWNED BY ON TILE
+            // let arrResponse = allOwnedGames.response.games
+            // arrResponse.forEach((game) => {
+            //   game.gameOwnedBy = user.name
+              
+            // })
+            // return arrResponse
           })
         })
       } else if(user.profileLink.substr(27, 8) == "profiles") {
@@ -52,6 +62,15 @@ const RecommendedGames = (props) => {
           return GetOwnedGames(id)
           .then(allOwnedGames => {
             return allOwnedGames.response.games
+
+            //PART OF GETTING GAME OWNED BY ON TILE
+            // let arrResponse = allOwnedGames.response.games
+            // arrResponse.forEach((game) => {
+            //   game.gameOwnedBy = user.name
+              
+            // })
+            
+            // return arrResponse
           })
       }else {
         return Promise.resolve()
@@ -59,8 +78,43 @@ const RecommendedGames = (props) => {
     })) //promise.all means the entire thing will wait before running then - make sure to return all
     //async related things
     .then((totalGames) => {
+      //this section is to allow the tiles to show does or does not own certain games
+      
+      //PART OF GETTING GAME OWNED BY ON TILE
+      // let gameMap = new Map()
+      // let nameMap = new Map()
+      // for(let i = 0; i< totalGames.length; i++){
+      //   for(let j = 0; j<totalGames[i].length; j++){
+      //     let appId = totalGames[i][j].appid
+      //     let name = totalGames[i][j].gameOwnedBy
+      //     if(!gameMap.has(appId)){
+      //       gameMap.set(appId, [name])
+      //     } else {
+      //       gameMap.set(appId, [gameMap.get(appId), [name]])
+      //     }
+      //     if(!nameMap.has(name)){
+      //       nameMap.set(name, "at least 1")
+      //     }
+      //   }
+      // }
+      
+      //PART OF GETTING GAME OWNED BY ON TILE
+      // let refinedGameMap = new Map()
+      // for(const [mapKey, mapValue] of gameMap){
+      //   if(mapValue.length > nameMap.size -1){
+      //     refinedGameMap.set(mapKey, mapValue)
+      //   }
+      // }
+
+
+      //PART OF GETTING GAME OWNED BY ON TILE
+      // for(const [mapKey, mapValue] of refinedGameMap){  
+      //   refinedGameMap.set(mapKey, concatAllMapValuesPerKey(mapValue))
+      // }
+
 
       const games = totalGames.flat()
+      
 
       const reducedGames = games.reduce((games, game) => {
         
@@ -98,19 +152,31 @@ const RecommendedGames = (props) => {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
       })
 
-      // console.log(filteredGames.length)
-      // console.log(filteredGames)
+      //PART OF GETTING GAME OWNED BY ON TILE
+      // for(let i = 0; i<filteredGames.length;i++){
+      //   if(refinedGameMap.size == 0) {
+      //     return
+      //   }
+      //   if(refinedGameMap.has(filteredGames[i].appid)){
+      //     filteredGames[i].ownedBy = []
+      //     filteredGames[i].ownedBy.push(...refinedGameMap.get(filteredGames[i].appid))
+      //   }
+      // }
+
+
       setGames(filteredGames)
       setRecommendedGames(filteredRecommendedGames)
-      // console.log(filteredGames)
-      // let newArrr = filteredGames.filter(game => {
-      //   if(!(game.img_icon_url == "" || game.img_logo_url == "")) {
-      //     return game
-      //   }
-      // })
-      // console.log(newArrr)
-      // console.log(newArrr.length)
     })
+  }
+
+  //PART OF GETTING GAME OWNED BY ON TILE
+  const concatAllMapValuesPerKey = (mapValues) => {
+    let howManyToConcat = mapValues.length
+    let newArr = []
+    for(let i = 0; i<howManyToConcat-1;i++){
+      newArr.push(mapValues[i].concat(mapValues[i+1]))
+    }
+    return newArr
   }
     
   
@@ -213,7 +279,6 @@ const RecommendedGames = (props) => {
                   <p className="title is-3 has-text-centered">These are the recommended games (all but one person owns these):</p>
                   <div className="level-item">
                   <div className="columns is-multiline is-centered">
-
         {showRecommended && recommendedGames.map(game => {
           return (
             <div className="column is-2 is-narrow" key={game.appid}>
