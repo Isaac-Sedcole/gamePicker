@@ -46,31 +46,31 @@ const RecommendedGames = (props) => {
         .then(steamIdObj => {
           return GetOwnedGames(steamIdObj.response.steamid)
           .then(allOwnedGames => {
-            return allOwnedGames.response.games
+            // return allOwnedGames.response.games
 
             //PART OF GETTING GAME OWNED BY ON TILE
-            // let arrResponse = allOwnedGames.response.games
-            // arrResponse.forEach((game) => {
-            //   game.gameOwnedBy = user.name
+            let arrResponse = allOwnedGames.response.games
+            arrResponse.forEach((game) => {
+              game.gameOwnedBy = [user.name]
               
-            // })
-            // return arrResponse
+            })
+            return arrResponse
           })
         })
       } else if(user.profileLink.substr(27, 8) == "profiles") {
         let id = user.profileLink.substr(36,user.profileLink.length-36)
           return GetOwnedGames(id)
           .then(allOwnedGames => {
-            return allOwnedGames.response.games
+            // return allOwnedGames.response.games
 
             //PART OF GETTING GAME OWNED BY ON TILE
-            // let arrResponse = allOwnedGames.response.games
-            // arrResponse.forEach((game) => {
-            //   game.gameOwnedBy = user.name
+            let arrResponse = allOwnedGames.response.games
+            arrResponse.forEach((game) => {
+              game.gameOwnedBy = [user.name]
               
-            // })
+            })
             
-            // return arrResponse
+            return arrResponse
           })
       }else {
         return Promise.resolve()
@@ -112,20 +112,23 @@ const RecommendedGames = (props) => {
       //   refinedGameMap.set(mapKey, concatAllMapValuesPerKey(mapValue))
       // }
 
-
+      // console.log(totalGames)
       const games = totalGames.flat()
+      // console.log(games)
       
 
       const reducedGames = games.reduce((games, game) => {
-        
         if(!games[game.appid])  {
-          games[game.appid] = { ...game, count: 1 }
+          games[game.appid] = { ...game, count: 1}
         } else {
           games[game.appid].count++
+          games[game.appid].gameOwnedBy.push(game.gameOwnedBy[0])          
         }
 
         return games
       }, {})
+
+      // console.log(reducedGames)
 
       const filteredGames = Object.values(reducedGames).filter(game => {
         if(game.count == props.userList.length && !(game.img_icon_url == "" || game.img_logo_url == "")){
@@ -138,7 +141,6 @@ const RecommendedGames = (props) => {
           return game
         }
       })
-        
   
       filteredGames.sort((a,b) => {
         let textA = a.name.toUpperCase()
