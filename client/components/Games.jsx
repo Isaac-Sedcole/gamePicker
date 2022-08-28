@@ -20,6 +20,8 @@ const Games = (props) => {
   const [currentlySelectedGame, setCurrentlySelectedGame] = useState(null)
   const [listOfPeopleWhoOwnGame, setListOfPeopleWhoOwnGame] = useState([])
   const [checkboxChecked, setCheckBoxChecked] = useState(false)
+  const [showLoadGames, setShowLoadGames] = useState(true)
+  const [showGames, setShowGames] = useState(false)
 
   useEffect(() => {
     loadProfiles()
@@ -53,11 +55,14 @@ const Games = (props) => {
     setCheckBoxChecked(false)
     setCurrentlySelectedGame(null)
     setListOfPeopleWhoOwnGame([])
+    setShowGames(true)
   }
 
   const loadGames = () => {
     // console.log(profiles)
     fetchGames()
+    setShowLoadGames(false)
+    setShowGames(true)
     setShowGame(true)
   }
 
@@ -181,6 +186,7 @@ const Games = (props) => {
   }
 
   const checkBoxHandler = (specificGame) => {
+    setShowGames(false)
     if(specificGame.appid == checkboxChecked.gameId){
       setCheckBoxChecked(!checkboxChecked)
     } else {
@@ -261,7 +267,7 @@ const Games = (props) => {
         <button onClick={resetButton}>Reset!</button>
         </>} 
         <br></br>
-        <button onClick={loadGames}>Load games</button>
+        {showLoadGames && <button onClick={loadGames}>Load games</button>}
         <br></br>
         <br></br>
         <br></br>
@@ -278,10 +284,12 @@ const Games = (props) => {
 
         { showGame &&
         <section className="articles">
-          <p className="title is-3 has-text-centered">These are the games everyone owns</p>
+        
+
+          {showGames && <p className="title is-3 has-text-centered">These are the games everyone owns</p>}
           <div className="level-item">
             <div className="columns is-multiline is-centered">
-              {games.map(game => {
+              {showGames && games.map(game => {
                 return (
                   <div className="column is-2 is-narrow" key={game.appid}>
                     <div className="card">
@@ -302,6 +310,7 @@ const Games = (props) => {
               })}
             </div>
           </div>
+          
         </section>     
         }        
         {/* {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add profiles</p> } */}
