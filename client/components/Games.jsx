@@ -23,9 +23,15 @@ const Games = (props) => {
   const [showLoadGames, setShowLoadGames] = useState(true)
   const [showGames, setShowGames] = useState(false)
 
+  const [formData, setFormData] = useState({name: ''})
+  const [searchedGames, setSearchedGames] = useState({name: ''})
+  const [showSearchedGames, setShowSearchedGames] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
+
   useEffect(() => {
     loadProfiles()
     setCurrentlySelectedGame(null)
+    setShowSearch(false)
   }, [])
 
   // useEffect(()=> {
@@ -64,6 +70,7 @@ const Games = (props) => {
     setShowLoadGames(false)
     setShowGames(true)
     setShowGame(true)
+    setShowSearch(true)
   }
 
   const fetchGames = () => {
@@ -124,6 +131,7 @@ const Games = (props) => {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0
       })
 
+      setSearchedGames(filteredGames)
       setGames(filteredGames)
 
       // console.log(filteredGames.length)
@@ -241,6 +249,46 @@ const Games = (props) => {
 
   }
 
+  const handleChange = (event) => {
+
+    // Note that this setFormData takes a function
+    // Do this whenever you set state based on existing state
+
+    setFormData(currentFormData => {
+      return {
+        ...currentFormData,
+        [event.target.name]: event.target.value
+      }
+    })
+    //var i = 0, len = myArray.length;
+        //while (i < len) {
+            // your code
+            //i++
+        //}
+        // iterate through list if str.indexOf('word')!== -1 add to a list and then display the list - do this with every extra input
+        if(event.target.value.length == 0) {
+          setShowSearchedGames(false)
+          setShowGames(true)
+        } else {
+
+          let i = 0, len = games.length
+          let tempGames = []
+          //add games that match the value of formData to a list
+          while(i < len) {
+            if(parsedName(games[i].name.toUpperCase()).indexOf(event.target.value.toUpperCase())!= -1){
+              tempGames.push(games[i])
+            }
+            i++
+          }
+          
+          //state change of games to update the list
+          setSearchedGames(tempGames)
+          //controls what games should be shown
+          setShowSearchedGames(true)
+          setShowGames(false)
+        }
+  }
+
 
     return (
       <div className="mx-3">
@@ -268,6 +316,14 @@ const Games = (props) => {
         </>} 
         <br></br>
         {showLoadGames && <button onClick={loadGames}>Load games</button>}
+        {showSearch && 
+        <form>
+          <h2>Game Search</h2>
+          <label>
+            <input type="text" name="name" placeholder="Grand Theft Auto" onChange={handleChange} value={formData.name}/>
+          </label>       
+        </form>
+        }
         <br></br>
         <br></br>
         <br></br>
@@ -281,7 +337,6 @@ const Games = (props) => {
         <br></br>
         <br></br>
         <br></br>
-
         { showGame &&
         <section className="articles">
         
@@ -289,6 +344,25 @@ const Games = (props) => {
           {showGames && <p className="title is-3 has-text-centered">These are the games everyone owns</p>}
           <div className="level-item">
             <div className="columns is-multiline is-centered">
+              {showSearchedGames && searchedGames.map(game => {
+                return (
+                  <div className="column is-2 is-narrow" key={game.appid}>
+                    <div className="card">
+                      <div className="card-content">
+                        <div className="media">
+                          <div className="media-content">
+                            <div className="content">
+                              <input className="p-6 m-6" type="radio" checked={checkboxChecked} onChange={() => checkBoxHandler(game)}></input>
+                              <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
+                              <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
+                            </div>
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
               {showGames && games.map(game => {
                 return (
                   <div className="column is-2 is-narrow" key={game.appid}>
