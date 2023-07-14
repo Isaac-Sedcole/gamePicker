@@ -15,8 +15,9 @@ exports.seed = function(knex) {
         {name: 'Dane', profileLink: "https://steamcommunity.com/profiles/76561198171122074"},
         {name: 'Dave', profileLink: "https://steamcommunity.com/profiles/76561198009952379"},
         {name: 'Lachlan', profileLink: "https://steamcommunity.com/id/Kampz"},
-        {name: 'Kienan', profileLink: "https://steamcommunity.com/id/YiuChung"},
+        {name: 'Kienan', profileLink: "https://steamcommunity.com/id/kienanl/"},
         {name: 'Lenny', profileLink: "https://steamcommunity.com/id/lennyc1nz"},
+        {name: 'Zen', profileLink: "https://steamcommunity.com/profiles/76561198044928191/"},
       ]);
     });
 };
