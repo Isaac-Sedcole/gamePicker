@@ -10,7 +10,6 @@
   "author": "EDA",
   "license": "ISC",
   "scripts": {
-    "gitUseHttps":"git config --global url.'https://github.com/'.insteadOf git@github.com",
     "dev": "run-p dev:client dev:server",
     "dev:client": "npm run webpack -- --watch",
     "dev:server": "nodemon server",
