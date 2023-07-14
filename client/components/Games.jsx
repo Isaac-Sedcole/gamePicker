@@ -16,23 +16,45 @@ const Games = (props) => {
     name:'',
     profileLink:''
   }])
-  const [showGame, setShowGame] = useState(false)
+  const [showGame, setShowGame] = useState({showGameState:false})
   const [currentlySelectedGame, setCurrentlySelectedGame] = useState(null)
   const [listOfPeopleWhoOwnGame, setListOfPeopleWhoOwnGame] = useState([])
   const [checkboxChecked, setCheckBoxChecked] = useState(false)
   const [showLoadGames, setShowLoadGames] = useState(true)
-  const [showGames, setShowGames] = useState(false)
+  const [showGames, setShowGames] = useState({showGames:false})
 
   const [formData, setFormData] = useState({name: ''})
-  const [searchedGames, setSearchedGames] = useState({name: ''})
-  const [showSearchedGames, setShowSearchedGames] = useState(false)
+  const [searchedGames, setSearchedGames] = useState([])
+  const [showSearchedGames, setShowSearchedGames] = useState({showSearchedGames:false})
   const [showSearch, setShowSearch] = useState(false)
+  const [searchedIsValidArray, setSearchedIsValidArray] = useState(false)
+
+  const [showOnlySelectedGame, setShowOnlySelectedGame] = useState(false)
 
   useEffect(() => {
     loadProfiles()
     setCurrentlySelectedGame(null)
     setShowSearch(false)
+    // setSearchedGames([])
   }, [])
+
+  useEffect(() => {
+    if(currentlySelectedGame!=null && showSearchedGames.showSearchedGames) {
+      setShowOnlySelectedGame(true)
+      setShowSearch(false)
+    } else {
+      setShowOnlySelectedGame(false)
+      // setShowSearch(true)
+    }
+  }, [currentlySelectedGame])
+
+  useEffect(() => {
+    if(Array.isArray(searchedGames)){
+      setSearchedIsValidArray(true)
+    }else {
+      setSearchedIsValidArray(false)
+    }
+  }, [searchedGames])
 
   // useEffect(()=> {
   //   // console.log('temp useEffect')
@@ -61,15 +83,16 @@ const Games = (props) => {
     setCheckBoxChecked(false)
     setCurrentlySelectedGame(null)
     setListOfPeopleWhoOwnGame([])
-    setShowGames(true)
+    setShowGames({showGames:true})
+    setShowSearch(true)
   }
 
   const loadGames = () => {
     // console.log(profiles)
     fetchGames()
     setShowLoadGames(false)
-    setShowGames(true)
-    setShowGame(true)
+    setShowGames({showGames:true})
+    setShowGame({showGameState:true})
     setShowSearch(true)
   }
 
@@ -194,17 +217,21 @@ const Games = (props) => {
   }
 
   const checkBoxHandler = (specificGame) => {
-    setShowGames(false)
+    setShowGames({showGames:false})
     if(specificGame.appid == checkboxChecked.gameId){
       setCheckBoxChecked(!checkboxChecked)
+      setShowSearch(false)
     } else {
       setCheckBoxChecked(true)
+      setShowSearch(true)
     }
 
     if(currentlySelectedGame == specificGame) {
       setCurrentlySelectedGame(null)
+      setShowSearch(true)
     } else {
       setCurrentlySelectedGame(specificGame)
+      setShowSearch(false)
     }
 
     profiles.map(user => {
@@ -267,8 +294,8 @@ const Games = (props) => {
         //}
         // iterate through list if str.indexOf('word')!== -1 add to a list and then display the list - do this with every extra input
         if(event.target.value.length == 0) {
-          setShowSearchedGames(false)
-          setShowGames(true)
+          setShowSearchedGames({showSearchedGames:false})
+          setShowGames({showGames:true})
         } else {
 
           let i = 0, len = games.length
@@ -284,8 +311,10 @@ const Games = (props) => {
           //state change of games to update the list
           setSearchedGames(tempGames)
           //controls what games should be shown
-          setShowSearchedGames(true)
-          setShowGames(false)
+          if(Array.isArray(searchedGames)){
+            setShowSearchedGames({showSearchedGames:true})
+          }
+          setShowGames({showGames:false})
         }
   }
 
@@ -302,7 +331,7 @@ const Games = (props) => {
       
         <br></br>
         <br></br>
-        { showGame && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
+        { showGame.showGameState && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
         <br></br>
         <br></br>
         {showSelected && <h3><a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+selectedGame.appid+"/"+parsedName(selectedGame.name)+"/"}>{selectedGame.name}</a></h3>}
@@ -337,14 +366,36 @@ const Games = (props) => {
         <br></br>
         <br></br>
         <br></br>
-        { showGame &&
-        <section className="articles">
         
-
-          {showGames && <p className="title is-3 has-text-centered">These are the games everyone owns</p>}
-          <div className="level-item">
+        { showGame.showGameState &&     
+        
+        <section className="articles">
+        <p className="title is-3 has-text-centered">These are the games everyone owns</p>
+        <div className="level-item">
             <div className="columns is-multiline is-centered">
-              {showSearchedGames && searchedGames.map(game => {
+
+            {showSearchedGames.showSearchedGames && searchedIsValidArray && searchedGames.map(game => {
+                return (
+                  <div className="column is-2 is-narrow" key={game.appid}>
+                    <div className="card">
+                      <div className="card-content">
+                        <div className="media">
+                          <div className="media-content">
+                            <div className="content">
+                              <input className="p-6 m-6" type="radio" checked={checkboxChecked} onChange={() => checkBoxHandler(game)}></input>
+                              <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
+                              <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
+                            </div>
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                )
+              })
+              (<button onClick={resetButton}>Reset!</button>)
+              }
+              {showGames.showGames && games.map(game => {
                 return (
                   <div className="column is-2 is-narrow" key={game.appid}>
                     <div className="card">
@@ -363,30 +414,15 @@ const Games = (props) => {
                   </div>
                 )
               })}
-              {showGames && games.map(game => {
-                return (
-                  <div className="column is-2 is-narrow" key={game.appid}>
-                    <div className="card">
-                      <div className="card-content">
-                        <div className="media">
-                          <div className="media-content">
-                            <div className="content">
-                              <input className="p-6 m-6" type="radio" checked={checkboxChecked} onChange={() => checkBoxHandler(game)}></input>
-                              <img src={"http://media.steampowered.com/steamcommunity/public/images/apps/"+game.appid+"/"+game.img_icon_url+".jpg"}/>
-                              <a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+game.appid+"/"+parsedName(game.name)+"/"}>{game.name}</a>
-                            </div>
-                          </div>
-                        </div> 
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
+              
+              
+              
             </div>
           </div>
-          
         </section>     
-        }        
+        
+        }
+
         {/* {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add profiles</p> } */}
         {/* {showLink && <p> Or go <button onClick={handleRedirectHome}>Here!</button> to select profiles</p> } */}
   

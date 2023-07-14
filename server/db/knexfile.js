@@ -1,4 +1,5 @@
 const path = require('path')
+// const path = 'postgres://USER:PASSWORD@INTERNAL_HOST:PORT/DATABASE'
 
 module.exports = {
   development: {
