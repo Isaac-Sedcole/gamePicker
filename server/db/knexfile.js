@@ -1,7 +1,5 @@
 const path = require('path')
 // const path = 'postgres://USER:PASSWORD@INTERNAL_HOST:PORT/DATABASE'
-//external = postgres://gamepickerpostgresql_88e0_user:OPaM5JEBH6bfa2KWyHcFgowYOUill5kG@dpg-cioe8qdgkuvh5gncunv0-a.singapore-postgres.render.com/gamepickerpostgresql_88e0
-//interal = postgres://gamepickerpostgresql_88e0_user:OPaM5JEBH6bfa2KWyHcFgowYOUill5kG@dpg-cioe8qdgkuvh5gncunv0-a/gamepickerpostgresql_88e0
 
 module.exports = {
   development: {
