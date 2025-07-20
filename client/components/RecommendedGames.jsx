@@ -201,14 +201,31 @@ const RecommendedGames = (props) => {
       {!showLink && <div>You have: {games.length} games in common
         <br></br>
         <br></br>
-        {!showLink && <button onClick={handleRandomGameSelector}>Choose a random game for me</button>}
+        {!showLink && <button className="custom-button" onClick={handleRandomGameSelector}>Choose a random game for me</button>}
         <br></br>
         <br></br>
-        {showSelected && <h3><a target="_blank" rel="noopener noreferrer" href={"https://store.steampowered.com/app/"+selectedGame.appid+"/"+parsedName(selectedGame.name)+"/"}>{selectedGame.name}</a></h3>}
+        {showSelected && (
+          <div className="column is-2 is-narrow">
+            <div className="card">
+              <div className="card-content">
+                <div className="media">
+                  <div className="media-content">
+                    <div className="content">
+                      <img src={`http://media.steampowered.com/steamcommunity/public/images/apps/${selectedGame.appid}/${selectedGame.img_icon_url}.jpg`} alt={selectedGame.name} />
+                      <a target="_blank" rel="noopener noreferrer" href={`https://store.steampowered.com/app/${selectedGame.appid}/${parsedName(selectedGame.name)}/`}>
+                        {selectedGame.name}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <br></br>
         <br></br>
         {overThreeInList && 
-        <button onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
+        <button className="custom-button" onClick={handleShowRecommended}>Show recommended games ({recommendedGames.length}) (most people own these):</button>
         }
         <br></br>
         
@@ -297,8 +314,8 @@ const RecommendedGames = (props) => {
       
       
 }
-      {showLink && <p> You haven't added anyone! go <button onClick={handleRedirect}>Here!</button> to add profiles</p> }
-      {showLink && <p> Or go <button onClick={handleRedirectHome}>Here!</button> to select profiles</p> }
+      {showLink && <p> You haven't added anyone! go <button className="custom-button" onClick={handleRedirect}>Here!</button> to add profiles</p> }
+      {showLink && <p> Or go <button className="custom-button" onClick={handleRedirectHome}>Here!</button> to select profiles</p> }
 
     {redirect && <Redirect to="/profiles" />}
     {homeRedirect && <Redirect to="/" />}

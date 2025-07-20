@@ -1,47 +1,37 @@
-import React, {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Nav = (props) => {
-
-  const [burgerVisible, setBurgerVisible] = useState(false)
+  const [burgerVisible, setBurgerVisible] = useState(false);
 
   const toggleBurger = () => {
-    setBurgerVisible(currentBurgerState => {
-      return !currentBurgerState
-    })
-  }
+    setBurgerVisible(currentBurgerState => !currentBurgerState);
+  };
 
-
-    return (
-      <nav className="navbar">
-        <div className="container">
-          <div className="navbar-brand">
-            <div className="navbar-item">
-              <Link to="/">
-                <h1>Game Picker</h1>
-              </Link>
-            </div>
-            <span onClick={toggleBurger} className={`navbar-burger burger ${burgerVisible ? 'is-active' : ''}`} data-target="navbarMenuHeroA">
-              <span></span>
-              <span></span>
-              <span></span>
-
-            </span>
+  return (
+    <nav className="navbar">
+      <div className="container">
+        <div className="navbar-brand">
+          <div className="navbar-item">
+            <Link to="/" className="navbar-title">
+              <h1>Game Picker</h1>
+            </Link>
           </div>
-          <div id="navbarMenuHeroA" className={`navbar-menu ${burgerVisible ? "is-active" : ""}`}>
+          <span onClick={toggleBurger} className={`navbar-burger burger ${burgerVisible ? 'is-active' : ''}`} data-target="navbarMenuHeroA">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroA" className={`navbar-menu ${burgerVisible ? "is-active" : ""}`}>
           <div className="navbar-end">
-          <Link onClick={toggleBurger} className="navbar-item" to={`/`}>Home</Link>
-          
-          <Link onClick={toggleBurger} className="navbar-item" to={`/profiles`}>Add profile</Link>
-
-          <Link onClick={toggleBurger} className="navbar-item" to={'/games'}>Games</Link>
-
-          </div>
-
+            <Link onClick={toggleBurger} className="navbar-item" to={`/profiles`}>Add profile</Link>
+            <Link onClick={toggleBurger} className="navbar-item" to={'/games'}>Games</Link>
           </div>
         </div>
-      </nav>
-    )
-  }
-  
-  export default Nav
+      </div>
+    </nav>
+  );
+};
+
+export default Nav;

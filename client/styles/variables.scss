@@ -1,17 +1,8 @@
-// Set your brand colors
-// $purple: #8A4D76;
-// $pink: #FA7C91;
-// $brown: #757763;
-// $beige-light: #D0D1CD;
-// $beige-lighter: #EFF0EB;
-$blue: #3298dc;
+// Modern color palette
+$primary-color: #4a90e2; // A modern blue
+$secondary-color: #50e3c2; // A fresh mint green
+$background-color: #f5f7fa; // A light grey for backgrounds
+$text-color: #333; // Dark grey for text
 
 // Update Bulma's global variables
-$family-sans-serif: "Lato", sans-serif;
-
-
-// Update some of Bulma's component variables
-
-$primary:darkviolet;
-
-$card-shadow: 0 2px 3px rgba($blue, 0.2), 0 0 0 1px rgba($blue, 0.2);
+$family-sans-serif: "Inter", sans-serif; // A modern sans-serif font

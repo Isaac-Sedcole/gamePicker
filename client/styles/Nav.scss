@@ -1,46 +1,50 @@
-@import "./variables.scss";
-
-// https://couds.github.io/react-bulma-components/?path=/story/navbar--default
-
 .navbar {
-  font-size: x-large;
-  height: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  position: fixed;
-  background-color: #edededeb;
-  width: 100%;
-  font-family: Georgia, serif;
-  
+  padding: 1rem;
+  background-color: $primary-color;
+  color: white;
+}
+
+.navbar-title h1 {
+  font-family: 'Montserrat', sans-serif; // Use a different font for a unique look
+  font-size: 2rem; // Increase the font size
+  color: #fff; // Ensure the text color contrasts with the navbar background
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); // Add a subtle shadow for depth
+  transition: color 0.3s, transform 0.3s; // Smooth transition for hover effects
+
+  &:hover {
+    color: $secondary-color; // Change color on hover for interactivity
+    transform: scale(1.1); // Slightly enlarge on hover
+  }
 }
 
 .navbar-item {
-  font-family: Georgia, serif;
-  color: black;
+  margin: 0 1rem;
+  font-family: $family-sans-serif;
+  color: white;
+  text-decoration: none;
+  position: relative;
+
+  &:hover {
+    color: $secondary-color;
+    background-color: transparent !important; // Ensure no background color change
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: $secondary-color;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
 }
-
-
-// .location-search-input {
-//   font-size: large;
-//   height: 30px;
-//   margin-top: 10px;
-//   width: 400px;
-//   line-height: 10px;
-// }
-
-// .autocomplete-dropdown-container {
-//   position: fixed;
-//   width: 400px;
-// }
-
-// .Loading {
-//   background-color: rgba(27, 163, 209, 0.801);
-// }
-
-// .searchbox {
-//   font-size: 18px;
-//   font-weight: bold;
-//   text-align: center;
-//   white-space: normal;
-// }

@@ -67,10 +67,6 @@ const StoredProfiles = (props) => {
 
     return (
       <>
-      <section className="hero is-info is-medium-is-bold">
-        <div className="hero-body">
-        </div>
-      </section> 
         <br></br>
         <br></br>
         <br></br>

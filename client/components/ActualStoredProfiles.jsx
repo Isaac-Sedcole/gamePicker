@@ -1,226 +1,102 @@
-import React, {useState, useEffect} from 'react'
-import { Link, Route } from 'react-router-dom'
-import {getAllUsers, GetSteamIdByUsername, GetOwnedGames} from '../apis/steam'
-import AddUser from './AddUser'
-import { connect } from 'react-redux'
-import { addCompareList, setShowProfiles } from '../actions/userList'
-import AddPersonModal from './AddPersonModal'
-import { setShowModal } from '../actions/modal'
-
-
+import React, { useState, useEffect } from 'react';
+import { Link, Route } from 'react-router-dom';
+import { getAllUsers, GetSteamIdByUsername, GetOwnedGames } from '../apis/steam';
+import { connect } from 'react-redux';
+import { addCompareList, setShowProfiles } from '../actions/userList';
+import AddPersonModal from './AddPersonModal';
+import { setShowModal } from '../actions/modal';
 
 const ActualStoredProfiles = (props) => {
+  const [compareList, setCompareList] = useState([]);
+  const [minProfiles, setMinProfiles] = useState(false);
+  const [profiles, setProfiles] = useState([]);
 
-  const [compareList, setCompareList] = useState([])
-  const [minProfiles, setMinProfiles] = useState(false)
-//   const [showModal, setShowModal] = useState(false)
-  const [profiles , setProfiles] = useState([{
-    id:null,
-    name:'',
-    profileLink:'',
-    selected: false
-  }])
-  
   useEffect(() => {
-    loadProfiles()
-  },[])
-  
+    loadProfiles();
+  }, []);
+
   useEffect(() => {
-    props.dispatch(addCompareList(compareList))
-    
-    if(compareList.length > 1) {
-        setMinProfiles(true)
-    } else if(compareList.length < 2) {
-        setMinProfiles(false)
-    }
-  },[compareList])
+    props.dispatch(addCompareList(compareList));
+    setMinProfiles(compareList.length > 1);
+  }, [compareList]);
 
-
-
-
-  
-  
   const loadProfiles = () => {
-    getAllUsers()
-    .then(users => {
-      setProfiles(state => {
-        const userProfiles = []
-        users.map(user => {
-          userProfiles.push(user)
-          return user
-        })
-        state = userProfiles
-        return state
-      })
-    })
-  }
-  
+    getAllUsers().then(users => {
+      setProfiles(users);
+    });
+  };
+
   const handleClick = () => {
-    props.dispatch(setShowProfiles(!props.showProfiles))
-    // loadProfiles()
-    }
-    
-    const checkBoxHandler =  (user) => {
-        //testing for checking if private games library
-        //----------------------------
-        //getting username from vanityURL in its pure form
-        //if user already exists in currentList
-        if(compareList.filter(e => e.name == user.name).length < 1){
-          if(user.profileLink.substr(27, 2) == "id") {
-            let username = user.profileLink.substr(30,user.profileLink.length-30)
-            if(username[username.length-1] == "/") {
-              username = username.substr(0,username.length-1)
+    props.dispatch(setShowProfiles(!props.showProfiles));
+  };
+
+  const checkBoxHandler = (user) => {
+    if (compareList.every(e => e.name !== user.name)) {
+      if (user.profileLink.includes("/id/")) {
+        let username = user.profileLink.split("/id/")[1].replace("/", "");
+        GetSteamIdByUsername(username).then(steamIdObj => {
+          GetOwnedGames(steamIdObj.response.steamid).then(allOwnedGames => {
+            if (!allOwnedGames.response.games) {
+              props.dispatch(setShowModal(true));
             }
-            //using the username to return the steam ID
-            GetSteamIdByUsername(username)
-            .then(steamIdObj => {
-              GetOwnedGames(steamIdObj.response.steamid)
-              .then(allOwnedGames => {
-                //if the persons profile is private
-                if(allOwnedGames.response.games == undefined) {
-                  props.dispatch(setShowModal(true))
-                  
-                }
-              })
-            })
-          } else if(user.profileLink.substr(27, 8) == "profiles") {
-            let id = user.profileLink.substr(36,user.profileLink.length-36)
-            GetOwnedGames(id)
-            .then(allOwnedGames => {
-              //if the persons profile is private
-              if(allOwnedGames.response.games === undefined) {
-                props.dispatch(setShowModal(true))
-              }
-            })
+          });
+        });
+      } else if (user.profileLink.includes("/profiles/")) {
+        let id = user.profileLink.split("/profiles/")[1];
+        GetOwnedGames(id).then(allOwnedGames => {
+          if (!allOwnedGames.response.games) {
+            props.dispatch(setShowModal(true));
           }
-        }
-          
-
-        //-------------------------------
-      setCompareList(currentList => {
-        let newArr = currentList.filter(person => {
-          return user.id != person.id
-        })
-        return newArr.length == currentList.length 
-        ?  [...newArr, user]
-        : [...newArr]
-      })
-
-      
-    }
-    
-    
-    const cardClass = (profile) => {
-      if(compareList <= 0) {
-        return false
+        });
       }
-      for(let i = 0; i < compareList.length; i++){
-        if(compareList[i].id == profile.id) {
-          return true
-        }
-      } 
-        return false
     }
 
+    setCompareList(currentList => {
+      const newArr = currentList.filter(person => person.id !== user.id);
+      return newArr.length === currentList.length ? [...newArr, user] : [...newArr];
+    });
+  };
 
-
-    return (
-      <>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-      <section className="articles">
-                <div className="card">
-                    <div className="card-content">
-                      <div className="media">
-                        <div className="media-content">
-                          <div className="content ">
-                            <div className="level-item">
-                                <p className="title is-3">StoredProfiles</p>
-                            </div>
-                            <div className="level-item">
-                              <button className="button is-medium is-info is-outlined" onClick={handleClick}>Show all profiles </button>
-                            </div>
-                            <br></br>
-                            <br></br>
-                            <div className="level-item">
-                              <div className="columns is-multiline is-centered">
-                                {props.showProfiles && profiles.map(profile => {
-                                  return (
-                                    <div className="column is-one-quarter" key={profile.id}> 
-                                      {/* <div className={"card "+ (cardClass(profile) ? 'has-background-light' : 'has-card-shadow')}> */}
-                                      {/* <button onClick={() => checkBoxHandler(profile)}><p className="p-6 is-size-3 has-text-weight-semibold">{profile.name}</p> */}
-                                      <div className={"card has-card-shadow "+ (cardClass(profile) ? 'has-background-warning' : 'has-background-light')}>
-                                          <div className="card-content">
-                                          <div className="media">
-                                            <div className="media-content">
-                                              <div className="content">
-                                                  {/* <label className="checkbox"> */}
-                                                    {/* blue outline around card when selected */}
-                                                  {/* <p className="p-6 is-size-3 has-text-weight-semibold"><input className="p-6 m-6" type="checkbox" onClick={() => checkBoxHandler(profile)}></input>{profile.name}</p> */}
-                                                  {/* <button onClick={() => checkBoxHandler(profile)}>{profile.name}</button> */}
-                                                  <a onClick={() => checkBoxHandler(profile)}><p className="p-6 is-size-3 has-text-weight-semibold">{profile.name}</p></a>
-                                                  {/* </label> */}
-                                                {/* <Link to={`/profiles/${profile.name}`}>{profile.name}</Link></h3> */}
-                                                {/* <ul>
-                                                  <li>{profile.profileLink}</li>
-                                                </ul> */}
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        </div>
-                                      {/* </button> */}
-                                    </div>
-                                  )
-                                })}
-                              </div>
-                              <br></br>
-                              <br></br>
-                            </div>
-                            {minProfiles && 
-                                <div className="level-item">
-                                    <Link className="button is-medium is-info is-outlined " to="/recommendedgames">Find games in common!</Link>
-                                </div>
-                            }
-                            {!minProfiles && 
-                                <div className="level-item">
-                                <Link className="button is-medium is-info is-outlined " disabled to="#">Find games in common!</Link>
-                              </div>
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+  return (
+    <>
+      <section className="profiles-section">
+        <div className="profiles-header">
+          <h3 className="title is-3">Stored Profiles</h3>
+          <button className="button is-medium is-info is-outlined" onClick={handleClick}>
+            {props.showProfiles ? 'Hide Profiles' : 'Show Profiles'}
+          </button>
+          {minProfiles ? (
+            <Link className="button is-medium is-info is-outlined" to="/recommendedgames">
+              Find games in common!
+            </Link>
+          ) : (
+            <button className="button is-medium is-info is-outlined" disabled>
+              Find games in common!
+            </button>
+          )}
+        </div>
+        {props.showProfiles && (
+          <div className="profile-cards">
+            {profiles.map(profile => (
+              <div
+                key={profile.id}
+                className={`profile-card ${compareList.some(p => p.id === profile.id) ? 'selected' : ''}`}
+                onClick={() => checkBoxHandler(profile)}
+              >
+                <p className="profile-name">{profile.name}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
-      { props.showModal && 
-      <>
-      {/* <AddPersonModal showModal={showModal} setShowModal={setShowModal}/> */}
-      <Route path="/" component={AddPersonModal} />
-      </>
-      }
-    
-      </>
-    )
-  }
+      {props.showModal && <Route path="/" component={AddPersonModal} />}
+    </>
+  );
+};
 
-  const mapStateToProps = (globalState) => {
-    return {
-      showProfiles: globalState.showProfiles,
-      showModal: globalState.showModal
-    }
-  }
-  
-  export default connect(mapStateToProps)(ActualStoredProfiles)
+const mapStateToProps = (globalState) => ({
+  showProfiles: globalState.showProfiles,
+  showModal: globalState.showModal,
+});
+
+export default connect(mapStateToProps)(ActualStoredProfiles);
